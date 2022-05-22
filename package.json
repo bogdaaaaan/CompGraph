@@ -1,0 +1,18 @@
+{
+  "jest": {
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "testRegex": "/tests/.*\\.(test|spec)?\\.(ts|tsx)$",
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+  },
+  "devDependencies": {
+    "@types/jest": "^27.5.1",
+    "jest": "^28.1.0",
+    "ts-jest": "^28.0.2"
+  }, 
+  "scripts": {
+    "test": "jest"
+  }
+}

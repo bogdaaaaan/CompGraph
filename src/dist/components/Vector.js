@@ -26,7 +26,10 @@ var Vector = /** @class */ (function () {
         };
         /* Transform vector into normal */
         this.toNormal = function () {
-            return Normal_1.default.create(_this._x, _this._y, _this._z);
+            var t = Normal_1.default.create(_this._x, _this._y, _this._z);
+            var t1 = new Normal_1.default(_this._x, _this._y, _this._z);
+            console.log("f:", t, "s", t1);
+            return t;
         };
         this._x = x;
         this._y = y;
