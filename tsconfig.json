@@ -6,11 +6,11 @@
         "removeComments": false,
         "sourceMap": false,
         "target": "es5",
-        "outDir": "./dist",
+        "outDir": "src/dist",
     },
     "include": [
-        "index.ts",
-        "components/*",
-        "components/objects/*"
+        "src/index.ts",
+        "src/components/*",
+        "src/components/objects/*"
     ]
 }
