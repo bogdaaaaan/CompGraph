@@ -21,6 +21,7 @@ var Normal = /** @class */ (function (_super) {
     function Normal(x, y, z) {
         return _super.call(this, x, y, z) || this;
     }
+    /* create new normal by given coordinates */
     Normal.create = function (x, y, z) {
         var len = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
         return new Normal(x / len, y / len, z / len);

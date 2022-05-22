@@ -24,7 +24,7 @@ export default class Scene {
 
 	private calcLighting = (normalAtPoint: Normal): string => {
 		const dotProduct: number = this._light.direction.dot(normalAtPoint);
-
+		// (0,0,-1) * (0,1,1)
 		if (dotProduct < 0) {
 			return ' ';
 		} else if (dotProduct < 0.2) {
@@ -42,9 +42,12 @@ export default class Scene {
 		const origin: Point = this._camera.location;
 
         let result: string = '';
-		for (let x = 0; x < this._screen.height; x++) {
+		/* for each row */
+		for (let y = 0; y < this._screen.height; y++) {
             let row: string = '';
-			for (let y = 0; y < this._screen.width; y++) {
+			/* for each element in row */
+			for (let x = 0; x < this._screen.width; x++) {
+
 				const dest: Point = this._screen.getPoint(x, y);
 				const direction: Vector = dest.sub(origin);
 				const ray: Ray = new Ray(direction, origin);

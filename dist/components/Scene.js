@@ -10,6 +10,7 @@ var Scene = /** @class */ (function () {
         };
         this.calcLighting = function (normalAtPoint) {
             var dotProduct = _this._light.direction.dot(normalAtPoint);
+            // (0,0,-1) * (0,1,1)
             if (dotProduct < 0) {
                 return ' ';
             }
@@ -29,9 +30,11 @@ var Scene = /** @class */ (function () {
         this.render = function () {
             var origin = _this._camera.location;
             var result = '';
-            for (var x = 0; x < _this._screen.height; x++) {
+            /* for each row */
+            for (var y = 0; y < _this._screen.height; y++) {
                 var row = '';
-                for (var y = 0; y < _this._screen.width; y++) {
+                /* for each element in row */
+                for (var x = 0; x < _this._screen.width; x++) {
                     var dest = _this._screen.getPoint(x, y);
                     var direction = dest.sub(origin);
                     var ray = new Ray_1.default(direction, origin);

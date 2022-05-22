@@ -1,7 +1,7 @@
-import Point from "./Point";
-import Normal from "./Normal";
-import Ray from "./Ray";
-import Vector from "./Vector";
+import Point from "../Point";
+import Normal from "../Normal";
+import Ray from "../Ray";
+import Vector from "../Vector";
 
 export default class Plane {
     private _center: Point;

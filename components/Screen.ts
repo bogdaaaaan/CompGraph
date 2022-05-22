@@ -15,6 +15,6 @@ export default class Screen {
 	public get height() { return this._height; }
 
 	public getPoint = (x: number, y: number): Point => {
-		return new Point(this._center.x, -this._width / 2 + y + 0.5, this._height / 2 - 0.5 - x);
+		return new Point(-this._width / 2 + x + 0.5, this._height / 2 - y - 0.5, this._center.z);
 	}
 }

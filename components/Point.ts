@@ -15,7 +15,7 @@ export default class Point {
     public get y () { return this._y }
     public get z () { return this._z }
 
-    // By adding vector to a point we get new point
+    /* By adding vector to a point we get new point */
     public add = (v: Vector): Point => new Point(this.x + v.x, this.y + v.y, this.z + v.z); 
     /* By subtracting point from point we get new vector */
     public sub = (p: Point): Vector => new Vector(this.x - p.x, this.y - p.y, this.z - p.z); 

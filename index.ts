@@ -1,16 +1,32 @@
 import Normal from "./components/Normal";
 import Point from "./components/Point";
-import Sphere from "./components/Sphere";
+import Sphere from "./components/objects/Sphere";
 import Screen from "./components/Screen";
 import Camera from "./components/Camera";
 import DirectedLight from "./components/DirectedLight";
 import Scene from "./components/Scene";
+//import Plane from "./components/objects/Plane";
 
 const sphere: Sphere = new Sphere(new Point(0, 0, 0), 20);
-const screen: Screen = new Screen(100, 50, new Point(10, 0, 0));
-const camera: Camera = new Camera(new Point(30, 0, 0));
-const light: DirectedLight = new DirectedLight(Normal.create(0.5, 1, 1));
+//const plane: Plane = new Plane(new Point(0,5,0),Normal.create(0,1,-1))
+const screen: Screen = new Screen(50, 20, new Point(0, 0, 30));
+const camera: Camera = new Camera(new Point(0, 0, 40));
+const light: DirectedLight = new DirectedLight(Normal.create(1, 1, 1));
 const scene: Scene = new Scene(camera, screen, light);
 
 scene.addObject(sphere);
+//scene.addObject(plane);
 scene.render();
+
+/*                   
+    y ^              
+      |              
+      |              
+      |              
+      0 ----------> x
+     /               
+    /                
+   /                 
+  v                  
+z                    
+*/

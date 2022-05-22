@@ -5,7 +5,7 @@ var Screen = /** @class */ (function () {
     function Screen(width, height, center) {
         var _this = this;
         this.getPoint = function (x, y) {
-            return new Point_1.default(_this._center.x, -_this._width / 2 + y + 0.5, _this._height / 2 - 0.5 - x);
+            return new Point_1.default(-_this._width / 2 + x + 0.5, _this._height / 2 - y - 0.5, _this._center.z);
         };
         this._width = width;
         this._height = height;

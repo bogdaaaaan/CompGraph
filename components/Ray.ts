@@ -13,7 +13,7 @@ export default class Ray {
     public get origin(): Point { return this._origin };
     public get direction(): Vector { return this._direction };
 
-
+	/* vec(o) + vec(d) * t, t - number of units from o */
 	public getPointAt = (n: number): Point => {
 		return this._origin.add(this._direction.mul(n));
 	}

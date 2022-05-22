@@ -1,7 +1,7 @@
-import Normal from "./Normal";
-import Point from "./Point";
-import Ray from "./Ray";
-import Vector from "./Vector";
+import Normal from "../Normal";
+import Point from "../Point";
+import Ray from "../Ray";
+import Vector from "../Vector";
 
 export default class Sphere {
     private _center: Point;
