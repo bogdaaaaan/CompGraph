@@ -7,6 +7,7 @@ import Vector from "./Vector";
 import Ray from "./Ray";
 
 export default class Scene {
+	// TODO: ANY => OBJECT
     private _objects: any[] = [];
 	private _camera: Camera;
 	private _screen: Screen;
@@ -52,20 +53,33 @@ export default class Scene {
 				const direction: Vector = dest.sub(origin);
 				const ray: Ray = new Ray(direction, origin);
 
+				/* find nearest object ray intersects with */
+				const distances: any[] = [];
+
                 for (let i = 0; i < this._objects.length; i++) {
                     const object = this._objects[i];
-                    const tVal: number = object.intersectionWith(ray);
-
-					if (tVal != null) {
-						const intersectionPoint: Point = ray.getPointAt(tVal);
-						const normalAtPoint: Normal = object.getNormalAtPoint(intersectionPoint);
-						
-                        row += this.calcLighting(normalAtPoint);
-						break;
-					} else {
-						row += ("-");
-					}
+                     
+					const t_value: number = object.intersectionWith(ray);
+					if (t_value != null) distances.push({obj: object, value: t_value});
                 }
+
+				if (distances.length === 0) {
+					row += ("-");
+				} else if (distances.length === 1) {
+					const intersectionPoint: Point = ray.getPointAt(distances[0].value);
+					const normalAtPoint: Normal = distances[0].obj.getNormalAtPoint(intersectionPoint);
+						
+					row += this.calcLighting(normalAtPoint);
+				} else {
+					const val = Math.min(...distances.map(x => x.value));
+					const obj = distances.filter(x => x.value === val)[0].obj;
+
+					const intersectionPoint: Point = ray.getPointAt(val);
+					const normalAtPoint: Normal = obj.getNormalAtPoint(intersectionPoint);
+						
+					row += this.calcLighting(normalAtPoint);
+				}
+
 				row += (" ");
 			}
 			result += row + ("\n");

@@ -4,6 +4,7 @@ var Ray_1 = require("./Ray");
 var Scene = /** @class */ (function () {
     function Scene(camera, screen, light) {
         var _this = this;
+        // TODO: ANY => OBJECT
         this._objects = [];
         this.addObject = function (obj) {
             _this._objects.push(obj);
@@ -33,25 +34,38 @@ var Scene = /** @class */ (function () {
             /* for each row */
             for (var y = 0; y < _this._screen.height; y++) {
                 var row = '';
-                /* for each element in row */
-                for (var x = 0; x < _this._screen.width; x++) {
+                var _loop_1 = function (x) {
                     var dest = _this._screen.getPoint(x, y);
                     var direction = dest.sub(origin);
                     var ray = new Ray_1.default(direction, origin);
+                    /* find nearest object ray intersects with */
+                    var distances = [];
                     for (var i = 0; i < _this._objects.length; i++) {
                         var object = _this._objects[i];
-                        var tVal = object.intersectionWith(ray);
-                        if (tVal != null) {
-                            var intersectionPoint = ray.getPointAt(tVal);
-                            var normalAtPoint = object.getNormalAtPoint(intersectionPoint);
-                            row += _this.calcLighting(normalAtPoint);
-                            break;
-                        }
-                        else {
-                            row += ("-");
-                        }
+                        var t_value = object.intersectionWith(ray);
+                        if (t_value != null)
+                            distances.push({ obj: object, value: t_value });
+                    }
+                    if (distances.length === 0) {
+                        row += ("-");
+                    }
+                    else if (distances.length === 1) {
+                        var intersectionPoint = ray.getPointAt(distances[0].value);
+                        var normalAtPoint = distances[0].obj.getNormalAtPoint(intersectionPoint);
+                        row += _this.calcLighting(normalAtPoint);
+                    }
+                    else {
+                        var val_1 = Math.min.apply(Math, distances.map(function (x) { return x.value; }));
+                        var obj = distances.filter(function (x) { return x.value === val_1; })[0].obj;
+                        var intersectionPoint = ray.getPointAt(val_1);
+                        var normalAtPoint = obj.getNormalAtPoint(intersectionPoint);
+                        row += _this.calcLighting(normalAtPoint);
                     }
                     row += (" ");
+                };
+                /* for each element in row */
+                for (var x = 0; x < _this._screen.width; x++) {
+                    _loop_1(x);
                 }
                 result += row + ("\n");
             }
