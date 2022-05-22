@@ -11,7 +11,6 @@ var Scene = /** @class */ (function () {
         };
         this.calcLighting = function (normalAtPoint) {
             var dotProduct = _this._light.direction.dot(normalAtPoint);
-            // (0,0,-1) * (0,1,1)
             if (dotProduct < 0) {
                 return ' ';
             }
@@ -35,6 +34,7 @@ var Scene = /** @class */ (function () {
             for (var y = 0; y < _this._screen.height; y++) {
                 var row = '';
                 var _loop_1 = function (x) {
+                    /* create ray for each pixel of screen */
                     var dest = _this._screen.getPoint(x, y);
                     var direction = dest.sub(origin);
                     var ray = new Ray_1.default(direction, origin);
@@ -46,20 +46,16 @@ var Scene = /** @class */ (function () {
                         if (t_value != null)
                             distances.push({ obj: object, value: t_value });
                     }
-                    if (distances.length === 0) {
-                        row += ("-");
-                    }
-                    else if (distances.length === 1) {
-                        var intersectionPoint = ray.getPointAt(distances[0].value);
-                        var normalAtPoint = distances[0].obj.getNormalAtPoint(intersectionPoint);
-                        row += _this.calcLighting(normalAtPoint);
-                    }
-                    else {
+                    /* if multiple objects on scene, draw only closest parts */
+                    if (distances.length) {
                         var val_1 = Math.min.apply(Math, distances.map(function (x) { return x.value; }));
                         var obj = distances.filter(function (x) { return x.value === val_1; })[0].obj;
                         var intersectionPoint = ray.getPointAt(val_1);
                         var normalAtPoint = obj.getNormalAtPoint(intersectionPoint);
                         row += _this.calcLighting(normalAtPoint);
+                    }
+                    else {
+                        row += ("-");
                     }
                     row += (" ");
                 };

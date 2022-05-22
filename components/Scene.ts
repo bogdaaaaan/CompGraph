@@ -25,7 +25,6 @@ export default class Scene {
 
 	private calcLighting = (normalAtPoint: Normal): string => {
 		const dotProduct: number = this._light.direction.dot(normalAtPoint);
-		// (0,0,-1) * (0,1,1)
 		if (dotProduct < 0) {
 			return ' ';
 		} else if (dotProduct < 0.2) {
@@ -48,7 +47,7 @@ export default class Scene {
             let row: string = '';
 			/* for each element in row */
 			for (let x = 0; x < this._screen.width; x++) {
-
+				/* create ray for each pixel of screen */
 				const dest: Point = this._screen.getPoint(x, y);
 				const direction: Vector = dest.sub(origin);
 				const ray: Ray = new Ray(direction, origin);
@@ -58,19 +57,13 @@ export default class Scene {
 
                 for (let i = 0; i < this._objects.length; i++) {
                     const object = this._objects[i];
-                     
 					const t_value: number = object.intersectionWith(ray);
+
 					if (t_value != null) distances.push({obj: object, value: t_value});
                 }
 
-				if (distances.length === 0) {
-					row += ("-");
-				} else if (distances.length === 1) {
-					const intersectionPoint: Point = ray.getPointAt(distances[0].value);
-					const normalAtPoint: Normal = distances[0].obj.getNormalAtPoint(intersectionPoint);
-						
-					row += this.calcLighting(normalAtPoint);
-				} else {
+				/* if multiple objects on scene, draw only closest parts */
+				if (distances.length) {
 					const val = Math.min(...distances.map(x => x.value));
 					const obj = distances.filter(x => x.value === val)[0].obj;
 
@@ -78,8 +71,9 @@ export default class Scene {
 					const normalAtPoint: Normal = obj.getNormalAtPoint(intersectionPoint);
 						
 					row += this.calcLighting(normalAtPoint);
+				} else {
+					row += ("-");
 				}
-
 				row += (" ");
 			}
 			result += row + ("\n");
