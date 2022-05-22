@@ -1,9 +1,10 @@
+import IObject from "../IObject";
 import Normal from "../Normal";
 import Point from "../Point";
 import Ray from "../Ray";
 import Vector from "../Vector";
 
-export default class Sphere {
+export default class Sphere implements IObject {
     private _center: Point;
 	private _radius: number;
 

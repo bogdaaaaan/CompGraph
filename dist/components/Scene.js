@@ -4,7 +4,6 @@ var Ray_1 = require("./Ray");
 var Scene = /** @class */ (function () {
     function Scene(camera, screen, light) {
         var _this = this;
-        // TODO: ANY => OBJECT
         this._objects = [];
         this.addObject = function (obj) {
             _this._objects.push(obj);

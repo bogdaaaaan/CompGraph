@@ -5,10 +5,10 @@ import Normal from "./Normal";
 import Point from "./Point";
 import Vector from "./Vector";
 import Ray from "./Ray";
+import IObject from "./IObject";
 
 export default class Scene {
-	// TODO: ANY => OBJECT
-    private _objects: any[] = [];
+    private _objects: IObject[] = [];
 	private _camera: Camera;
 	private _screen: Screen;
 	private _light: DirectedLight;
@@ -53,7 +53,7 @@ export default class Scene {
 				const ray: Ray = new Ray(direction, origin);
 
 				/* find nearest object ray intersects with */
-				const distances: any[] = [];
+				const distances: {obj: IObject, value: number}[] = [];
 
                 for (let i = 0; i < this._objects.length; i++) {
                     const object = this._objects[i];

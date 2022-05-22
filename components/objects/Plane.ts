@@ -2,8 +2,9 @@ import Point from "../Point";
 import Normal from "../Normal";
 import Ray from "../Ray";
 import Vector from "../Vector";
+import IObject from "../IObject";
 
-export default class Plane {
+export default class Plane implements IObject {
     private _center: Point;
 	private _normal: Normal;
 
