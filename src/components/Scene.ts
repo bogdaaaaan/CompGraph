@@ -9,6 +9,7 @@ import IObject from "./IObject";
 
 export default class Scene {
     private _objects: IObject[] = [];
+	private _result: string;
 	private _camera: Camera;
 	private _screen: Screen;
 	private _light: DirectedLight;
@@ -19,7 +20,9 @@ export default class Scene {
 		this._light = light;
 	}
 
-	public addObject = (obj: any): void => {
+	public get result (): string { return this._result };
+
+	public addObject = (obj: IObject): void => {
         this._objects.push(obj);
     }
 
@@ -39,6 +42,7 @@ export default class Scene {
 	}
 
 	public render = (): void => {
+		this._result = "";
 		const origin: Point = this._camera.location;
 
         let result: string = '';
@@ -52,24 +56,23 @@ export default class Scene {
 				const direction: Vector = dest.sub(origin);
 				const ray: Ray = new Ray(direction, origin);
 
-				/* find nearest object ray intersects with */
-				const distances: {obj: IObject, value: number}[] = [];
+				let object: IObject = null;
+				let t_value: number = Infinity;
 
                 for (let i = 0; i < this._objects.length; i++) {
-                    const object = this._objects[i];
-					const t_value: number = object.intersectionWith(ray);
+					const _object: IObject = this._objects[i];
+					const _t_value: number = _object.intersectionWith(ray);
 
-					if (t_value != null) distances.push({obj: object, value: t_value});
+					if (_t_value != null && _t_value < t_value){
+						t_value = _t_value;
+						object = _object;
+					}
                 }
 
-				/* if multiple objects on scene, draw only closest parts */
-				if (distances.length) {
-					const val = Math.min(...distances.map(x => x.value));
-					const obj = distances.filter(x => x.value === val)[0].obj;
-
-					const intersectionPoint: Point = ray.getPointAt(val);
-					const normalAtPoint: Normal = obj.getNormalAtPoint(intersectionPoint);
-						
+				/* if closest objects exists at given position, draw it's part */
+				if (object != null) {
+					const intersectionPoint: Point = ray.getPointAt(t_value);
+					const normalAtPoint: Normal = object.getNormalAtPoint(intersectionPoint);
 					row += this.calcLighting(normalAtPoint);
 				} else {
 					row += ("-");
@@ -78,6 +81,7 @@ export default class Scene {
 			}
 			result += row + ("\n");
 		}
+		this._result = result;
         console.log(result);
 	}
 }

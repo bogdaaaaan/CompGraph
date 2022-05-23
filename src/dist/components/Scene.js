@@ -27,49 +27,54 @@ var Scene = /** @class */ (function () {
             }
         };
         this.render = function () {
+            _this._result = "";
             var origin = _this._camera.location;
             var result = '';
             /* for each row */
             for (var y = 0; y < _this._screen.height; y++) {
                 var row = '';
-                var _loop_1 = function (x) {
+                /* for each element in row */
+                for (var x = 0; x < _this._screen.width; x++) {
                     /* create ray for each pixel of screen */
                     var dest = _this._screen.getPoint(x, y);
                     var direction = dest.sub(origin);
                     var ray = new Ray_1.default(direction, origin);
-                    /* find nearest object ray intersects with */
-                    var distances = [];
+                    var object = null;
+                    var t_value = Infinity;
                     for (var i = 0; i < _this._objects.length; i++) {
-                        var object = _this._objects[i];
-                        var t_value = object.intersectionWith(ray);
-                        if (t_value != null)
-                            distances.push({ obj: object, value: t_value });
+                        var _object = _this._objects[i];
+                        var _t_value = _object.intersectionWith(ray);
+                        if (_t_value != null && _t_value < t_value) {
+                            t_value = _t_value;
+                            object = _object;
+                        }
                     }
                     /* if multiple objects on scene, draw only closest parts */
-                    if (distances.length) {
-                        var val_1 = Math.min.apply(Math, distances.map(function (x) { return x.value; }));
-                        var obj = distances.filter(function (x) { return x.value === val_1; })[0].obj;
-                        var intersectionPoint = ray.getPointAt(val_1);
-                        var normalAtPoint = obj.getNormalAtPoint(intersectionPoint);
+                    if (object != null) {
+                        var intersectionPoint = ray.getPointAt(t_value);
+                        var normalAtPoint = object.getNormalAtPoint(intersectionPoint);
                         row += _this.calcLighting(normalAtPoint);
                     }
                     else {
                         row += ("-");
                     }
                     row += (" ");
-                };
-                /* for each element in row */
-                for (var x = 0; x < _this._screen.width; x++) {
-                    _loop_1(x);
                 }
                 result += row + ("\n");
             }
+            _this._result = result;
             console.log(result);
         };
         this._camera = camera;
         this._screen = screen;
         this._light = light;
     }
+    Object.defineProperty(Scene.prototype, "result", {
+        get: function () { return this._result; },
+        enumerable: false,
+        configurable: true
+    });
+    ;
     return Scene;
 }());
 exports.default = Scene;

@@ -15,7 +15,7 @@ export default class Plane implements IObject {
 
 	public intersectionWith = (ray: Ray): number => {
 		let denom: number = this._normal.dot(ray.direction);
-		if (denom > 1e-6) {
+		if (Math.abs(denom) > 1e-6) {
 			let p0l0: Vector = this._center.sub(ray.origin);
 			let t = p0l0.dot(this._normal) / denom;
 
@@ -25,7 +25,6 @@ export default class Plane implements IObject {
 				return null;
 			}
 		}
-
 		return null;
 	}
 	public getNormalAtPoint = (p: Point): Normal => this._normal;

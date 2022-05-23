@@ -5,7 +5,7 @@ var Plane = /** @class */ (function () {
         var _this = this;
         this.intersectionWith = function (ray) {
             var denom = _this._normal.dot(ray.direction);
-            if (denom > 1e-6) {
+            if (Math.abs(denom) > 1e-6) {
                 var p0l0 = _this._center.sub(ray.origin);
                 var t = p0l0.dot(_this._normal) / denom;
                 if (t >= 0) {

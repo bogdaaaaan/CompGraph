@@ -5,15 +5,17 @@ import Screen from "./components/Screen";
 import Camera from "./components/Camera";
 import DirectedLight from "./components/DirectedLight";
 import Scene from "./components/Scene";
+import Plane from "./components/objects/Plane";
 
-const sphere: Sphere = new Sphere(new Point(0, 0, 0), 20);
-
-const screen: Screen = new Screen(50, 20, new Point(0, 0, 30));
-const camera: Camera = new Camera(new Point(0, 0, 40));
+const screen: Screen = new Screen(20, 20, new Point(0, 0, 30));
+const camera: Camera = new Camera(new Point(0, 0, 50));
 const light: DirectedLight = new DirectedLight(Normal.create(1, 1, 1));
 const scene: Scene = new Scene(camera, screen, light);
 
+const sphere: Sphere = new Sphere(new Point(-10, 0, 0), 15);
+const plane: Plane = new Plane(new Point(0, 0, 0), Normal.create(-1, -1, -1));
 scene.addObject(sphere);
+scene.addObject(plane);
 scene.render();
 
 /*                   

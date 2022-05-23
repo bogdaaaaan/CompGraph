@@ -5,13 +5,24 @@
     },
     "testEnvironment": "node",
     "testRegex": "/tests/.*\\.(test|spec)?\\.(ts|tsx)$",
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"]
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   },
   "devDependencies": {
     "@types/jest": "^27.5.1",
+    "@types/node": "^17.0.35",
     "jest": "^28.1.0",
-    "ts-jest": "^28.0.2"
-  }, 
+    "ts-jest": "^28.0.2",
+    "ts-node": "^10.8.0",
+    "tslib": "^2.4.0",
+    "typescript": "^4.6.4"
+  },
   "scripts": {
     "test": "jest"
   }
