@@ -8,8 +8,8 @@ var Scene = /** @class */ (function () {
         this.addObject = function (obj) {
             _this._objects.push(obj);
         };
-        this.calcLighting = function (normalAtPoint) {
-            var dotProduct = _this._light.direction.dot(normalAtPoint);
+        this.calcLighting = function (normalAtPoint, t_val) {
+            var dotProduct = t_val ? _this._light.direction.dot(normalAtPoint) / (t_val / 10) : _this._light.direction.dot(normalAtPoint);
             if (dotProduct < 0) {
                 return ' ';
             }
@@ -49,11 +49,12 @@ var Scene = /** @class */ (function () {
                             object = _object;
                         }
                     }
-                    /* if multiple objects on scene, draw only closest parts */
+                    /* if closest objects exists at given position, draw it's part */
                     if (object != null) {
                         var intersectionPoint = ray.getPointAt(t_value);
                         var normalAtPoint = object.getNormalAtPoint(intersectionPoint);
-                        row += _this.calcLighting(normalAtPoint);
+                        row += _this.calcLighting(normalAtPoint, t_value);
+                        //row += this.calcLighting(normalAtPoint);
                     }
                     else {
                         row += ("-");

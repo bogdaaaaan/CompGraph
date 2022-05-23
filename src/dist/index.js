@@ -13,7 +13,7 @@ var camera = new Camera_1.default(new Point_1.default(0, 0, 50));
 var light = new DirectedLight_1.default(Normal_1.default.create(1, 1, 1));
 var scene = new Scene_1.default(camera, screen, light);
 var sphere = new Sphere_1.default(new Point_1.default(-10, 0, 0), 15);
-var plane = new Plane_1.default(new Point_1.default(0, 0, 0), Normal_1.default.create(-1, -1, -1));
+var plane = new Plane_1.default(new Point_1.default(0, 0, 0), Normal_1.default.create(1, 1, 1));
 scene.addObject(sphere);
 scene.addObject(plane);
 scene.render();

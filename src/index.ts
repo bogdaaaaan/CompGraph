@@ -13,7 +13,7 @@ const light: DirectedLight = new DirectedLight(Normal.create(1, 1, 1));
 const scene: Scene = new Scene(camera, screen, light);
 
 const sphere: Sphere = new Sphere(new Point(-10, 0, 0), 15);
-const plane: Plane = new Plane(new Point(0, 0, 0), Normal.create(-1, -1, -1));
+const plane: Plane = new Plane(new Point(0, 0, 0), Normal.create(1, 1, 1));
 scene.addObject(sphere);
 scene.addObject(plane);
 scene.render();
