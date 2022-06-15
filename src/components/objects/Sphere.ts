@@ -1,4 +1,4 @@
-import IObject from "../IObject";
+import IObject from "./IObject";
 import Normal from "../Normal";
 import Point from "../Point";
 import Ray from "../Ray";

@@ -2,37 +2,25 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var Ray_1 = require("./Ray");
 var Scene = /** @class */ (function () {
-    function Scene(camera, screen, light) {
+    function Scene(camera, screen, light, output) {
         var _this = this;
         this._objects = [];
         this.addObject = function (obj) {
             _this._objects.push(obj);
         };
         this.calcLighting = function (normalAtPoint, t_val) {
-            var dotProduct = t_val ? _this._light.direction.dot(normalAtPoint) / (t_val / 10) : _this._light.direction.dot(normalAtPoint);
+            var dotProduct = _this._light.direction.dot(normalAtPoint);
             if (dotProduct < 0) {
-                return ' ';
-            }
-            else if (dotProduct < 0.2) {
-                return '.';
-            }
-            else if (dotProduct < 0.5) {
-                return '*';
-            }
-            else if (dotProduct < 0.8) {
-                return '0';
+                return 0;
             }
             else {
-                return '#';
+                return dotProduct;
             }
         };
         this.render = function () {
-            _this._result = "";
             var origin = _this._camera.location;
-            var result = '';
             /* for each row */
             for (var y = 0; y < _this._screen.height; y++) {
-                var row = '';
                 /* for each element in row */
                 for (var x = 0; x < _this._screen.width; x++) {
                     /* create ray for each pixel of screen */
@@ -44,6 +32,7 @@ var Scene = /** @class */ (function () {
                     for (var i = 0; i < _this._objects.length; i++) {
                         var _object = _this._objects[i];
                         var _t_value = _object.intersectionWith(ray);
+                        console.log(_t_value);
                         if (_t_value != null && _t_value < t_value) {
                             t_value = _t_value;
                             object = _object;
@@ -53,29 +42,20 @@ var Scene = /** @class */ (function () {
                     if (object != null) {
                         var intersectionPoint = ray.getPointAt(t_value);
                         var normalAtPoint = object.getNormalAtPoint(intersectionPoint);
-                        row += _this.calcLighting(normalAtPoint, t_value);
-                        //row += this.calcLighting(normalAtPoint);
+                        _this._output.addElement(y, _this.calcLighting(normalAtPoint));
                     }
                     else {
-                        row += ("-");
+                        _this._output.addElement(y, -1);
                     }
-                    row += (" ");
                 }
-                result += row + ("\n");
             }
-            _this._result = result;
-            console.log(result);
+            _this._output.displayRenderResult();
         };
         this._camera = camera;
         this._screen = screen;
         this._light = light;
+        this._output = output;
     }
-    Object.defineProperty(Scene.prototype, "result", {
-        get: function () { return this._result; },
-        enumerable: false,
-        configurable: true
-    });
-    ;
     return Scene;
 }());
 exports.default = Scene;
