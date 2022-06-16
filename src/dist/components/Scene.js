@@ -8,7 +8,7 @@ var Scene = /** @class */ (function () {
         this.addObject = function (obj) {
             _this._objects.push(obj);
         };
-        this.calcLighting = function (normalAtPoint, t_val) {
+        this.calcLighting = function (normalAtPoint) {
             var dotProduct = _this._light.direction.dot(normalAtPoint);
             if (dotProduct < 0) {
                 return 0;
@@ -31,8 +31,8 @@ var Scene = /** @class */ (function () {
                     var t_value = Infinity;
                     for (var i = 0; i < _this._objects.length; i++) {
                         var _object = _this._objects[i];
+                        // TODO: Fix intersection
                         var _t_value = _object.intersectionWith(ray);
-                        console.log(_t_value);
                         if (_t_value != null && _t_value < t_value) {
                             t_value = _t_value;
                             object = _object;
@@ -42,7 +42,8 @@ var Scene = /** @class */ (function () {
                     if (object != null) {
                         var intersectionPoint = ray.getPointAt(t_value);
                         var normalAtPoint = object.getNormalAtPoint(intersectionPoint);
-                        _this._output.addElement(y, _this.calcLighting(normalAtPoint));
+                        var light = _this.calcLighting(normalAtPoint);
+                        _this._output.addElement(y, light);
                     }
                     else {
                         _this._output.addElement(y, -1);
