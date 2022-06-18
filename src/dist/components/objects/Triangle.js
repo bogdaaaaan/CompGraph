@@ -12,22 +12,23 @@ var Triangle = /** @class */ (function () {
             _this._n3 = matrix.multiplyVector(_this._n3);
         };
         this.intersectionWith = function (ray) {
-            var o = ray.origin;
-            var d = ray.direction;
+            var orig = ray.origin;
+            var dir = ray.direction;
             var edge1 = _this._v2.sub(_this._v1);
             var edge2 = _this._v3.sub(_this._v1);
-            var pvec = d.cross(edge2);
+            var pvec = dir.cross(edge2);
             var det = edge1.dot(pvec);
             if (det < _this._eps) {
                 return null;
             }
-            var tvec = o.sub(_this._v1);
+            console.log('made it');
+            var tvec = orig.sub(_this._v1);
             var u = tvec.dot(pvec);
             if (u < 0 || u > det) {
                 return null;
             }
             var qvec = tvec.cross(edge1);
-            var v = d.dot(qvec);
+            var v = dir.dot(qvec);
             if (v < 0 || u + v > det) {
                 return null;
             }

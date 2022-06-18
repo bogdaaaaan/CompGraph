@@ -41,21 +41,20 @@ export default class Triangle implements IObject {
     }
 
     public intersectionWith = (ray: Ray): number => {
-        const o: Point = ray.origin;
-        const d: Vector = ray.direction;
+        const orig: Point = ray.origin;
+        const dir: Vector = ray.direction;
         
         const edge1: Vector = this._v2.sub(this._v1);
         const edge2: Vector = this._v3.sub(this._v1);
 
-        const pvec: Vector = d.cross(edge2);
+        const pvec: Vector = dir.cross(edge2);
         const det: number = edge1.dot(pvec);
 
-        if (det< this._eps){
+        if (det < this._eps){
             return null;
         }
 
-        const tvec: Vector = o.sub(this._v1);
-
+        const tvec: Vector = orig.sub(this._v1);
         let u: number = tvec.dot(pvec);
 
         if (u < 0 || u > det) {
@@ -63,7 +62,7 @@ export default class Triangle implements IObject {
         }
 
         const qvec: Vector = tvec.cross(edge1);
-        let v: number = d.dot(qvec);
+        let v: number = dir.dot(qvec);
 
         if (v < 0 || u + v > det) {
             return null;

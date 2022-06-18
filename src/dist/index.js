@@ -22,12 +22,12 @@ process_1.argv.forEach(function (val, index) {
 });
 var screen = new Screen_1.default(50, 50, new Point_1.default(0, 0, 30));
 var camera = new Camera_1.default(new Point_1.default(0, 0, 60));
-var light = new DirectedLight_1.default(Normal_1.default.create(1, 1, 1));
+var light = new DirectedLight_1.default(Normal_1.default.create(0, 0, 1));
 var out = new ConsoleOutput_1.default(screen.width, screen.height);
 //const out: IOutput = new FileOutput(screen.width, screen.height, output_file);
 var scene = new Scene_1.default(camera, screen, light, out);
 //const reader: ObjectReader = new ObjectReader(input_file);
-var triangle1 = new Triangle_1.default(new Point_1.default(-20, 0, 0), new Point_1.default(0, 25, 0), new Point_1.default(20, 0, 0), new Vector_1.default(0, 0, 0), new Vector_1.default(0, 0, 0), new Vector_1.default(0, 0, 0));
+var triangle1 = new Triangle_1.default(new Point_1.default(-10, 0, 0), new Point_1.default(0, 30, 0), new Point_1.default(10, 0, 0), new Vector_1.default(0, 0, 0), new Vector_1.default(0, 0, 0), new Vector_1.default(0, 0, 0));
 //const triangle2: Triangle = new Triangle(new Point(0, 0, 0), new Point(-20, 30, 0), new Point(30, 30, 0), new Vector(0,0,0), new Vector(0,0,0), new Vector(0,0,0));
 //const poligons: Triangle[] = reader.readFile();
 //console.log(poligons.length);

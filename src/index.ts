@@ -28,14 +28,14 @@ argv.forEach((val, index) => {
 
 const screen: Screen = new Screen(50, 50, new Point(0, 0, 30));
 const camera: Camera = new Camera(new Point(0, 0, 60));
-const light: DirectedLight = new DirectedLight(Normal.create(1, 1, 1));
+const light: DirectedLight = new DirectedLight(Normal.create(0, 0, 1));
 const out: IOutput = new ConsoleOutput(screen.width, screen.height);
 //const out: IOutput = new FileOutput(screen.width, screen.height, output_file);
 
 const scene: Scene = new Scene(camera, screen, light, out);
 //const reader: ObjectReader = new ObjectReader(input_file);
 
-const triangle1: Triangle = new Triangle(new Point(-20, 0, 0), new Point(0, 25, 0), new Point(20, 0, 0), new Vector(0,0,0), new Vector(0,0,0), new Vector(0,0,0));
+const triangle1: Triangle = new Triangle(new Point(-10, 0, 0), new Point(0, 30, 0), new Point(10, 0, 0), new Vector(0,0,0), new Vector(0,0,0), new Vector(0,0,0));
 //const triangle2: Triangle = new Triangle(new Point(0, 0, 0), new Point(-20, 30, 0), new Point(30, 30, 0), new Vector(0,0,0), new Vector(0,0,0), new Vector(0,0,0));
 
 //const poligons: Triangle[] = reader.readFile();
