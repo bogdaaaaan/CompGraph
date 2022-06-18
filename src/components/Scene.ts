@@ -62,7 +62,7 @@ export default class Scene {
                 for (let i = 0; i < this._objects.length; i++) {
 					const _object: IObject = this._objects[i];
 					const _t_value: number = _object.intersectionWith(ray);
-
+					
 					if (_t_value != null && _t_value < t_value){
 						t_value = _t_value;
 						object = _object;

@@ -53,8 +53,8 @@ var Scene = /** @class */ (function () {
                     if (object != null) {
                         var intersectionPoint = ray.getPointAt(t_value);
                         var normalAtPoint = object.getNormalAtPoint(intersectionPoint);
-                        row += _this.calcLighting(normalAtPoint, t_value);
-                        //row += this.calcLighting(normalAtPoint);
+                        //row += this.calcLighting(normalAtPoint, t_value);
+                        row += _this.calcLighting(normalAtPoint);
                     }
                     else {
                         row += ("-");
