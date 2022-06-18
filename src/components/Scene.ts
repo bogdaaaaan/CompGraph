@@ -26,8 +26,8 @@ export default class Scene {
         this._objects.push(obj);
     }
 
-	private calcLighting = (normalAtPoint: Normal, t_val?: number): string => {
-		const dotProduct: number = t_val ? this._light.direction.dot(normalAtPoint) / (t_val / 10) : this._light.direction.dot(normalAtPoint);
+	private calcLighting = (normalAtPoint: Normal): string => {
+		const dotProduct: number = this._light.direction.dot(normalAtPoint);
 		if (dotProduct < 0) {
 			return ' ';
 		} else if (dotProduct < 0.2) {
@@ -73,7 +73,6 @@ export default class Scene {
 				if (object != null) {
 					const intersectionPoint: Point = ray.getPointAt(t_value);
 					const normalAtPoint: Normal = object.getNormalAtPoint(intersectionPoint);
-					//row += this.calcLighting(normalAtPoint, t_value);
 					row += this.calcLighting(normalAtPoint);
 				} else {
 					row += ("-");

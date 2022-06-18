@@ -35,7 +35,7 @@ export default class Vector {
 
     /* changing lengths of vector to 1 */
     public normalize = (): Vector => {
-        let len = Math.sqrt(this.x ** 2 + this.y ** 2 + this.z ** 2);
+        let len = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
         return new Vector(this.x / len, this.y / len, this.z / len);
     }
 

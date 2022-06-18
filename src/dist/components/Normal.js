@@ -23,7 +23,7 @@ var Normal = /** @class */ (function (_super) {
     }
     /* create new normal by given coordinates */
     Normal.create = function (x, y, z) {
-        var len = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2));
+        var len = Math.sqrt(x * x + y * y + z * z);
         return new Normal(x / len, y / len, z / len);
     };
     return Normal;

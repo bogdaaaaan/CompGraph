@@ -21,7 +21,7 @@ var Vector = /** @class */ (function () {
         };
         /* changing lengths of vector to 1 */
         this.normalize = function () {
-            var len = Math.sqrt(Math.pow(_this.x, 2) + Math.pow(_this.y, 2) + Math.pow(_this.z, 2));
+            var len = Math.sqrt(_this.x * _this.x + _this.y * _this.y + _this.z * _this.z);
             return new Vector(_this.x / len, _this.y / len, _this.z / len);
         };
         /* Transform vector into normal */

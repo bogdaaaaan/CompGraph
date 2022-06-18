@@ -8,8 +8,8 @@ var Scene = /** @class */ (function () {
         this.addObject = function (obj) {
             _this._objects.push(obj);
         };
-        this.calcLighting = function (normalAtPoint, t_val) {
-            var dotProduct = t_val ? _this._light.direction.dot(normalAtPoint) / (t_val / 10) : _this._light.direction.dot(normalAtPoint);
+        this.calcLighting = function (normalAtPoint) {
+            var dotProduct = _this._light.direction.dot(normalAtPoint);
             if (dotProduct < 0) {
                 return ' ';
             }
@@ -53,7 +53,6 @@ var Scene = /** @class */ (function () {
                     if (object != null) {
                         var intersectionPoint = ray.getPointAt(t_value);
                         var normalAtPoint = object.getNormalAtPoint(intersectionPoint);
-                        //row += this.calcLighting(normalAtPoint, t_value);
                         row += _this.calcLighting(normalAtPoint);
                     }
                     else {
