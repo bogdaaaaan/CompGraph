@@ -14,6 +14,7 @@ export default class Screen {
     public get width() { return this._width; }
 	public get height() { return this._height; }
 
+	/* points selection goes from left top screen corner to right bottom */ 
 	public getPoint = (x: number, y: number): Point => {
 		return new Point(-this._width / 2 + x + 0.5, this._height / 2 - y - 0.5, this._center.z);
 	}

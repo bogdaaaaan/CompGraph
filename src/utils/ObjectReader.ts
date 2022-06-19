@@ -76,7 +76,7 @@ export default class ObjectReader {
                 n.push(new Vector(normal_p2[0], normal_p2[1], normal_p2[2]));
             }
 
-            this._poligons.push(new Triangle(p[0], p[1], p[2], n[0], n[1], n[2]));
+            //this._poligons.push(new Triangle(p[0], p[1], p[2], n[0], n[1], n[2]));
         }
         return this._poligons;
     }

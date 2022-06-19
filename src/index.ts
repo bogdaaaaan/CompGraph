@@ -21,41 +21,27 @@ let output_file: string = "";
 argv.forEach((val, index) => {
     if (val.startsWith("--source=")){
         input_file=val.split("=")[1];
-    } else if (val.startsWith("--output")){
+    } else if (val.startsWith("--output=")){
         output_file = val.split("=")[1];
     } 
 });
 
-const screen: Screen = new Screen(50, 50, new Point(0, 0, 30));
-const camera: Camera = new Camera(new Point(0, 0, 60));
-const light: DirectedLight = new DirectedLight(Normal.create(0, 0, 1));
-const out: IOutput = new ConsoleOutput(screen.width, screen.height);
-//const out: IOutput = new FileOutput(screen.width, screen.height, output_file);
+const screen: Screen = new Screen(200, 200, new Point(0, 0, 200));
+const camera: Camera = new Camera(new Point(0, 0, 350));
+const light: DirectedLight = new DirectedLight(Normal.create(1, 1, 1));
+const out: IOutput = new FileOutput(screen.width, screen.height, output_file);
+//const out: IOutput = new ConsoleOutput(screen.width, screen.height);
 
 const scene: Scene = new Scene(camera, screen, light, out);
-//const reader: ObjectReader = new ObjectReader(input_file);
 
-const triangle1: Triangle = new Triangle(new Point(-10, 0, 0), new Point(0, 30, 0), new Point(10, 0, 0), new Vector(0,0,0), new Vector(0,0,0), new Vector(0,0,0));
-//const triangle2: Triangle = new Triangle(new Point(0, 0, 0), new Point(-20, 30, 0), new Point(30, 30, 0), new Vector(0,0,0), new Vector(0,0,0), new Vector(0,0,0));
+const sphere: Sphere = new Sphere(new Point(0,0,0), 150);
+const plane: Plane = new Plane(new Point(0,0,0), Normal.create(1,1,1));
+const triangle: Triangle = new Triangle(new Point(-10, 0, 25), new Point(30, 5, 35), new Point(0, 40, 30));
 
-//const poligons: Triangle[] = reader.readFile();
-//console.log(poligons.length);
+scene.addObject(sphere);
+//scene.addObject(plane);
+//scene.addObject(triangle);
 
-// const matrix: Matrix4x4 = new Matrix4x4();
-// matrix.move(100, -150,0);
-// matrix.rotateX(55);
-// matrix.scale(60,60,60);
-
-// triangle.transform(matrix);
-
-// for (let t = 0; t < poligons.length; t++) {
-//     poligons[t].transform(matrix);
-//     scene.addObject(poligons[t]);
-// }
-
-
-scene.addObject(triangle1);
-//scene.addObject(triangle2);
 scene.render();
 /*                   
     y ^              
