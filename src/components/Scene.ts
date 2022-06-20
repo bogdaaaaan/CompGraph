@@ -28,6 +28,7 @@ export default class Scene {
 
 	private calcLighting = (normalAtPoint: Normal): number => {
 		const dotProduct = this._light.direction.dot(normalAtPoint);
+	
 		if (dotProduct < 0) {
 			return 0;
 		} else {
@@ -52,10 +53,8 @@ export default class Scene {
                 for (let i = 0; i < this._objects.length; i++) {
 					const _object: IObject = this._objects[i];
 
-					// TODO: Fix intersection
 					const _t_value: number = _object.intersectionWith(ray);
 		
-
 					if (_t_value != null && _t_value < t_value){
 						t_value = _t_value;
 						object = _object;

@@ -26,21 +26,39 @@ argv.forEach((val, index) => {
     } 
 });
 
-const screen: Screen = new Screen(200, 200, new Point(0, 0, 200));
-const camera: Camera = new Camera(new Point(0, 0, 350));
+const WIDTH: number = 300;
+const HEIGHT: number = 300;
+const SCREEN_POS: number = 300;
+const CAMERA_POS: number = 400;
+
+const screen: Screen = new Screen(WIDTH, HEIGHT, new Point(0, 0, SCREEN_POS));
+const camera: Camera = new Camera(new Point(0, 0, CAMERA_POS));
 const light: DirectedLight = new DirectedLight(Normal.create(1, 1, 1));
 const out: IOutput = new FileOutput(screen.width, screen.height, output_file);
 //const out: IOutput = new ConsoleOutput(screen.width, screen.height);
 
 const scene: Scene = new Scene(camera, screen, light, out);
 
-const sphere: Sphere = new Sphere(new Point(0,0,0), 150);
+const sphere: Sphere = new Sphere(new Point(100,150,0), 50);
 const plane: Plane = new Plane(new Point(0,0,0), Normal.create(1,1,1));
-const triangle: Triangle = new Triangle(new Point(-10, 0, 25), new Point(30, 5, 35), new Point(0, 40, 30));
+const triangle: Triangle = new Triangle(new Point(-40, 0, 15), new Point(30, -25, 65), new Point(0, 50, 30), new Vector(0, 0, 0), new Vector(0, 0, 0), new Vector(0, 0, 0));
 
-scene.addObject(sphere);
+//scene.addObject(sphere);
 //scene.addObject(plane);
 //scene.addObject(triangle);
+
+const matrix: Matrix4x4 = new Matrix4x4();
+matrix.scale(600, 600, 600);
+matrix.rotateZ(270);
+
+const reader: ObjectReader = new ObjectReader(input_file);
+const poligons: Triangle[] = reader.readFile();
+console.log(poligons.length);
+
+for (let i = 0; i < poligons.length; i++) {
+    poligons[i].transform(matrix);
+    scene.addObject(poligons[i]);
+}
 
 scene.render();
 /*                   

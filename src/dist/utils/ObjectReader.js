@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var LineByLine = require("n-readlines");
+var Triangle_1 = require("../components/objects/Triangle");
 var Point_1 = require("../components/Point");
 var Vector_1 = require("../components/Vector");
 var ObjectReader = /** @class */ (function () {
@@ -60,7 +61,7 @@ var ObjectReader = /** @class */ (function () {
                     p.push(new Point_1.default(vertex_p1[0], vertex_p1[1], vertex_p1[2]));
                     n.push(new Vector_1.default(normal_p2[0], normal_p2[1], normal_p2[2]));
                 }
-                //this._poligons.push(new Triangle(p[0], p[1], p[2], n[0], n[1], n[2]));
+                _this._poligons.push(new Triangle_1.default(p[0], p[1], p[2], n[0], n[1], n[2]));
             }
             return _this._poligons;
         };

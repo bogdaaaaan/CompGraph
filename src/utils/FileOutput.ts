@@ -41,9 +41,8 @@ export default class FileOutput implements IOutput {
             for (let y = 0; y < this._height; y++) {
                 result_string += `${this._matrix[x][y][0]} ${this._matrix[x][y][1]} ${this._matrix[x][y][2]}\n`;
             }
-            result_string += '\n';
         }
-
+        
         try {
             fs.writeFileSync(this._filename, result_string);
         } catch (error) {

@@ -31,7 +31,6 @@ var Scene = /** @class */ (function () {
                     var t_value = Infinity;
                     for (var i = 0; i < _this._objects.length; i++) {
                         var _object = _this._objects[i];
-                        // TODO: Fix intersection
                         var _t_value = _object.intersectionWith(ray);
                         if (_t_value != null && _t_value < t_value) {
                             t_value = _t_value;

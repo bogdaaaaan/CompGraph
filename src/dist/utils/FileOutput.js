@@ -25,7 +25,6 @@ var FileOutput = /** @class */ (function () {
                 for (var y = 0; y < _this._height; y++) {
                     result_string += "".concat(_this._matrix[x][y][0], " ").concat(_this._matrix[x][y][1], " ").concat(_this._matrix[x][y][2], "\n");
                 }
-                result_string += '\n';
             }
             try {
                 fs.writeFileSync(_this._filename, result_string);

@@ -104,7 +104,6 @@ export default class Matrix4x4 {
             this.multiplyMatrices(new_move);
         }
     }
-
     
     public rotateY = (y_angle: number): void => {
         const rad: number = (y_angle) * (Math.PI / 180) ;
