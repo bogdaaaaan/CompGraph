@@ -19,7 +19,7 @@ const sphere: Sphere = new Sphere(new Point(0, 0, 0), 15);
 const plane: Plane = new Plane(new Point(0, 0, 0), Normal.create(1, 1, 0.3));
 const triangle: Triangle = new Triangle(new Point(0, 15, 15), new Point(-15, -10, 15), new Point(25, 0, 15))
 
-//scene.addObject(sphere);
+scene.addObject(sphere);
 scene.addObject(plane);
 //scene.addObject(triangle);
 

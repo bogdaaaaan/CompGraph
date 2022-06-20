@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/* sphere is defined as center point and radius around it */
 var Sphere = /** @class */ (function () {
     function Sphere(center, radius) {
         var _this = this;
@@ -17,6 +18,7 @@ var Sphere = /** @class */ (function () {
             var c = k2 - r2;
             /* discriminant */
             var D = b * b - 4 * a * c;
+            /* if D == 0 it means there is only one intersection point */
             if (D >= 0) {
                 /* if there is an intersection point, get distance between it and ray origin */
                 return (-b - Math.sqrt(D)) / 2 * a;

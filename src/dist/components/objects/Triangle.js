@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-/* counterclockwise */
+/* triangle can be defined as 3 points written counterclockwise so that pint inside triangle is left to its edges*/
 var Triangle = /** @class */ (function () {
     function Triangle(a, b, c) {
         this._v1 = a;
@@ -31,10 +31,6 @@ var Triangle = /** @class */ (function () {
         var t = edge2.dot(qvec);
         var inv_det = 1 / det;
         t *= inv_det;
-        // u *= inv_det;
-        // v *= inv_det;
-        // this._u = u;
-        // this._v = v;
         if (t >= 0) {
             return t;
         }

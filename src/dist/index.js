@@ -18,7 +18,7 @@ var scene = new Scene_1.default(camera, screen, light);
 var sphere = new Sphere_1.default(new Point_1.default(0, 0, 0), 15);
 var plane = new Plane_1.default(new Point_1.default(0, 0, 0), Normal_1.default.create(1, 1, 0.3));
 var triangle = new Triangle_1.default(new Point_1.default(0, 15, 15), new Point_1.default(-15, -10, 15), new Point_1.default(25, 0, 15));
-//scene.addObject(sphere);
+scene.addObject(sphere);
 scene.addObject(plane);
 //scene.addObject(triangle);
 scene.render();
