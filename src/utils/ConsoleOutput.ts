@@ -19,9 +19,6 @@ export default class ConsoleOutput implements IOutput {
         if (x < this._width) {
             this._matrix[x].push(elem);
         }
-        else{
-            console.log("Row index out of the image size");
-        }
     }
 
     public displayRenderResult = (): void => {

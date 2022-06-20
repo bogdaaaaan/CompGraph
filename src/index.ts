@@ -1,9 +1,7 @@
-import { argv } from "process";
 import Normal from "./components/Normal";
 import Point from "./components/Point";
 import Sphere from "./components/objects/Sphere";
 import Screen from "./components/Screen";
-import Camera from "./components/Camera";
 import DirectedLight from "./components/DirectedLight";
 import Scene from "./components/Scene";
 import Plane from "./components/objects/Plane";
@@ -14,52 +12,32 @@ import FileOutput from './utils/FileOutput';
 import ObjectReader from './utils/ObjectReader';
 import IOutput from "./utils/IOutput";
 import Matrix4x4 from "./components/Matrix4x4";
+import FilesService from "./utils/FilesService";
 
-let input_file: string = "";
-let output_file: string = "";
+/* get files paths */
+const DEFAULT_FILES_PATH: string = 'C:\\Users\\bodya\\Desktop\\Graphics\\CompGraph\\assets\\';
+const filesService = new FilesService(DEFAULT_FILES_PATH);
+const [input_file, output_file] = filesService.getFiles();
 
-argv.forEach((val, index) => {
-    if (val.startsWith("--source=")){
-        input_file=val.split("=")[1];
-    } else if (val.startsWith("--output=")){
-        output_file = val.split("=")[1];
-    } 
-});
+/* set main constants */
+const WIDTH: number = 100;
+const HEIGHT: number = 100;
+const FOV: number = 70;
+const SCREEN_POS: number = 150;
 
-const WIDTH: number = 300;
-const HEIGHT: number = 300;
-const SCREEN_POS: number = 300;
-const CAMERA_POS: number = 400;
-
-const screen: Screen = new Screen(WIDTH, HEIGHT, new Point(0, 0, SCREEN_POS));
-const camera: Camera = new Camera(new Point(0, 0, CAMERA_POS));
+/* create main components */
+const screen: Screen = new Screen(new Point(0, 0, SCREEN_POS), WIDTH, HEIGHT, FOV);
 const light: DirectedLight = new DirectedLight(Normal.create(1, 1, 1));
 const out: IOutput = new FileOutput(screen.width, screen.height, output_file);
 //const out: IOutput = new ConsoleOutput(screen.width, screen.height);
+const scene: Scene = new Scene(screen, light, out);
 
-const scene: Scene = new Scene(camera, screen, light, out);
-
-const sphere: Sphere = new Sphere(new Point(100,150,0), 50);
+/* create objects */
+const sphere: Sphere = new Sphere(new Point(0,0,0), 40);
 const plane: Plane = new Plane(new Point(0,0,0), Normal.create(1,1,1));
 const triangle: Triangle = new Triangle(new Point(-40, 0, 15), new Point(30, -25, 65), new Point(0, 50, 30), new Vector(0, 0, 0), new Vector(0, 0, 0), new Vector(0, 0, 0));
 
-//scene.addObject(sphere);
-//scene.addObject(plane);
-//scene.addObject(triangle);
-
-const matrix: Matrix4x4 = new Matrix4x4();
-matrix.scale(600, 600, 600);
-matrix.rotateZ(270);
-
-const reader: ObjectReader = new ObjectReader(input_file);
-const poligons: Triangle[] = reader.readFile();
-console.log(poligons.length);
-
-for (let i = 0; i < poligons.length; i++) {
-    poligons[i].transform(matrix);
-    scene.addObject(poligons[i]);
-}
-
+scene.addObject(sphere);
 scene.render();
 /*                   
     y ^              

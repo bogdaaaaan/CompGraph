@@ -86,11 +86,6 @@ export default class Triangle implements IObject {
     }
 
     getNormalAtPoint = (p: Point): Normal => {
-        // const a = this._n2.mul(this._u);
-        // const b = this._n3.mul(this._v);
-        // const c = this._n1.mul(1-this._u-this._v);
-        // const res = (a.add(b.add(c))).toNormal();
-
         // return res;
         const edge1: Vector = this._v2.sub(p);
         const edge2: Vector = this._v3.sub(p);

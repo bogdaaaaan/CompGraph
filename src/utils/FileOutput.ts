@@ -28,9 +28,6 @@ export default class FileOutput implements IOutput {
                 this._matrix[x].push([Math.round(255 * elem), Math.round(255 * elem), Math.round(255 * elem)]);
             }
         }
-        else{
-            console.log("Row index out of the image size");
-        }
     }
 
     public displayRenderResult = (): void => {
