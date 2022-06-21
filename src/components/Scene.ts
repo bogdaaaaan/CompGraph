@@ -34,9 +34,18 @@ export default class Scene {
 	public render = (): void => {
 		const rays: {ray: Ray, pos: number}[] = this._camera.getRays();
 		/* for each ray thrown at specific screen coordinates */
-		rays.map(element => {
+
+		let counter = 0;
+		rays.map((element, indx) => {
+			counter++;
+			if (counter === Math.round(rays.length / 100)) {
+				console.log(`Step ${indx}/${rays.length}`);
+				counter = 0;
+			}
+
 			let object: IObject = null;
 			let t_value: number = Infinity;
+
 			for (let i = 0; i < this._objects.length; i++) {
 				const _object: IObject = this._objects[i];
 				const _t_value: number = _object.intersectionWith(element.ray);

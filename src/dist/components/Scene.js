@@ -19,7 +19,13 @@ var Scene = /** @class */ (function () {
         this.render = function () {
             var rays = _this._camera.getRays();
             /* for each ray thrown at specific screen coordinates */
-            rays.map(function (element) {
+            var counter = 0;
+            rays.map(function (element, indx) {
+                counter++;
+                if (counter === Math.round(rays.length / 100)) {
+                    console.log("Step ".concat(indx, "/").concat(rays.length));
+                    counter = 0;
+                }
                 var object = null;
                 var t_value = Infinity;
                 for (var i = 0; i < _this._objects.length; i++) {

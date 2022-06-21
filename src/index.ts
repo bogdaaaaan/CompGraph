@@ -20,10 +20,10 @@ const filesService = new FilesService(DEFAULT_FILES_PATH);
 const [input_file, output_file] = filesService.getFiles();
 
 /* set main constants */
-const WIDTH: number = 1000;
-const HEIGHT: number = 1000;
+const WIDTH: number = 768;
+const HEIGHT: number = 768;
 
-const SCREEN_OFFSET: number = 2000;
+const SCREEN_OFFSET: number = 800;
 const CAMERA_POS: number = WIDTH + SCREEN_OFFSET;
 
 /* create main components */
@@ -36,10 +36,31 @@ const scene: Scene = new Scene(camera, light, out);
 /* create objects */
 const sphere: Sphere = new Sphere(new Point(0,0,0), 450);
 const plane: Plane = new Plane(new Point(WIDTH,0,0), Normal.create(1,0,0));
-const triangle: Triangle = new Triangle(new Point(-40, 0, 15), new Point(30, -25, 65), new Point(0, 50, 30), new Vector(0, 0, 0), new Vector(0, 0, 0), new Vector(0, 0, 0));
+const triangle: Triangle = new Triangle(new Point(0, 0, 0), new Point(1, 1, 0), new Point(1, 0, 0), new Vector(0, 0, -1), new Vector(0, 0, -1), new Vector(0, 0, -1));
 
-scene.addObject(sphere);
+/* read file */
+const objectReader: ObjectReader = new ObjectReader(input_file);
+const lists: any[] = objectReader.readObject();
+
+/* transformation matrix */
+const matrix: Matrix4x4 = new Matrix4x4();
+
+/* operations in order of transition, rotation and scale */
+//matrix.move(-25, -25, 0);
+matrix.rotate(270, 5, 310);
+matrix.scale(700);
+
+/* create poligons from transformed matrix and object data */
+const poligons: Triangle[] = matrix.transformObject(lists[0], lists[1], lists[2]);
+poligons.map(p => scene.addObject(p));
+
+// triangle.transform(matrix);
+// scene.addObject(triangle);
+
+const start: number = performance.now();
 scene.render();
+const end: number = performance.now();
+console.log(`Time elapsed: ${Math.round((end - start)/1000)}s`)
 
 /*                   
     y ^              

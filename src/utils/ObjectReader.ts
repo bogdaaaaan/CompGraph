@@ -1,21 +1,13 @@
 import LineByLine = require('n-readlines');
-import Triangle from '../components/objects/Triangle';
-import Point from '../components/Point';
-import Vector from '../components/Vector';
 
 export default class ObjectReader {
     private _filepath: string;
-    private _poligons: Triangle[];
 
     constructor(filepath: string) {
         this._filepath = filepath;
-        this._poligons = [];
     }
 
-    /* in case same object used multiple times */
-    public get poligons(): Triangle[]  { return this._poligons; };
-
-    public readObject = (): Triangle[] => {
+    public readObject = (): any[] => {
         /* using n-readlines module to read file line by line */
         const liner = new LineByLine(this._filepath);
 
@@ -61,19 +53,7 @@ export default class ObjectReader {
             }
         }
 
-        /* read indexes and create triangles with data from lists */
-        index_list.map((wrapper: number[][]) => {
-            const points: Point[] = [];
-            const normals: Vector[] = [];
-            wrapper.map((indexes: number[]) => {
-                const vertex: number[] = vertex_list[indexes[0] - 1]
-                const normal: number[] = normal_list[indexes[1] - 1]
-                
-                points.push(new Point(vertex[0], vertex[1], vertex[2]))
-                normals.push(new Vector(normal[0], normal[1], normal[2]));
-            })
-            this._poligons.push(new Triangle(points[0], points[1], points[2], normals[0], normals[1], normals[2]));
-        })
-        return this._poligons;
+        console.log(`Finished reading file ${this._filepath}`)
+        return [vertex_list, normal_list, index_list];
     }
 }

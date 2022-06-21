@@ -31,15 +31,6 @@ export default class Triangle implements IObject {
         this._eps = 0.000001;
     }
 
-    transform = (matrix: Matrix4x4) => {
-        this._v1 = matrix.multiplyPoint(this._v1);
-        this._v2 = matrix.multiplyPoint(this._v2);
-        this._v3 = matrix.multiplyPoint(this._v3);
-        this._n1 = matrix.multiplyVector(this._n1);
-        this._n2 = matrix.multiplyVector(this._n2);
-        this._n3 = matrix.multiplyVector(this._n3);
-    }
-
     intersectionWith = (ray: Ray): number => {
         const orig: Point = ray.origin;
         const dir: Vector = ray.direction;
@@ -90,5 +81,15 @@ export default class Triangle implements IObject {
         const edge1: Vector = this._v2.sub(p);
         const edge2: Vector = this._v3.sub(p);
         return edge1.cross(edge2).toNormal();
+    }
+
+    transform = (matrix: Matrix4x4): void => {
+        this._v1 = matrix.multiplyPoint(this._v1);
+        this._v2 = matrix.multiplyPoint(this._v2);
+        this._v3 = matrix.multiplyPoint(this._v3);
+
+        this._n1 = matrix.multiplyVector(this._n1);
+        this._n2 = matrix.multiplyVector(this._n2);
+        this._n3 = matrix.multiplyVector(this._n3);
     }
 }

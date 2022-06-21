@@ -4,14 +4,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Triangle = /** @class */ (function () {
     function Triangle(a, b, c, n1, n2, n3) {
         var _this = this;
-        this.transform = function (matrix) {
-            _this._v1 = matrix.multiplyPoint(_this._v1);
-            _this._v2 = matrix.multiplyPoint(_this._v2);
-            _this._v3 = matrix.multiplyPoint(_this._v3);
-            _this._n1 = matrix.multiplyVector(_this._n1);
-            _this._n2 = matrix.multiplyVector(_this._n2);
-            _this._n3 = matrix.multiplyVector(_this._n3);
-        };
         this.intersectionWith = function (ray) {
             var orig = ray.origin;
             var dir = ray.direction;
@@ -51,6 +43,14 @@ var Triangle = /** @class */ (function () {
             var edge1 = _this._v2.sub(p);
             var edge2 = _this._v3.sub(p);
             return edge1.cross(edge2).toNormal();
+        };
+        this.transform = function (matrix) {
+            _this._v1 = matrix.multiplyPoint(_this._v1);
+            _this._v2 = matrix.multiplyPoint(_this._v2);
+            _this._v3 = matrix.multiplyPoint(_this._v3);
+            _this._n1 = matrix.multiplyVector(_this._n1);
+            _this._n2 = matrix.multiplyVector(_this._n2);
+            _this._n3 = matrix.multiplyVector(_this._n3);
         };
         this._v1 = a;
         this._v2 = b;
