@@ -1,20 +1,19 @@
-import Screen from "./Screen";
+import Camera from "./Camera";
 import DirectedLight from "./DirectedLight";
 import Normal from "./Normal";
 import Point from "./Point";
-import Vector from "./Vector";
 import Ray from "./Ray";
 import IObject from "./objects/IObject";
 import IOutput from '../utils/IOutput';
 
 export default class Scene {
     private _objects: IObject[] = [];
-	private _screen: Screen;
+	private _camera: Camera;
 	private _light: DirectedLight;
 	private _output: IOutput;
 
-	constructor(camera: Screen, light: DirectedLight, output: IOutput) {
-		this._screen = camera;
+	constructor(camera: Camera, light: DirectedLight, output: IOutput) {
+		this._camera = camera;
 		this._light = light;
 		this._output = output;
 	}
@@ -33,7 +32,7 @@ export default class Scene {
 	}
 
 	public render = (): void => {
-		const rays: {ray: Ray, pos: number}[] = this._screen.getRays();
+		const rays: {ray: Ray, pos: number}[] = this._camera.getRays();
 		/* for each ray thrown at specific screen coordinates */
 		rays.map(element => {
 			let object: IObject = null;
@@ -59,6 +58,6 @@ export default class Scene {
 				this._output.addElement(element.pos, -1);
 			}
 		})
-		this._output.displayRenderResult();
+		this._output.getOutput();
 	}
 }

@@ -7,67 +7,74 @@ var Vector_1 = require("../components/Vector");
 var ObjectReader = /** @class */ (function () {
     function ObjectReader(filepath) {
         var _this = this;
-        this.readFile = function () {
+        this.readObject = function () {
+            /* using n-readlines module to read file line by line */
             var liner = new LineByLine(_this._filepath);
             var line;
+            /* create lists to which data will be pushed from file */
             var vertex_list = [];
             var normal_list = [];
             var index_list = [];
+            var _loop_1 = function () {
+                /* if line is empty or comment - skip it */
+                var words_in_line = line.toString().split(' ').filter(function (word) { return word !== ''; });
+                if (words_in_line.length === 0 || words_in_line[0] === '#')
+                    return "continue";
+                /* get first word from line that corresponds to list of vertices, list of vertex normals or vertex indices */
+                var parameter = words_in_line.shift();
+                /* push data from line in corresponding list */
+                switch (parameter) {
+                    case 'v':
+                        var vertecies_1 = [];
+                        words_in_line.map(function (_) { return vertecies_1.push(Number(_)); });
+                        vertex_list.push(vertecies_1);
+                        break;
+                    case 'vn':
+                        var normals_1 = [];
+                        words_in_line.map(function (_) { return normals_1.push(Number(_)); });
+                        normal_list.push(normals_1);
+                        break;
+                    case 'f':
+                        var indexes_wrapper_1 = [];
+                        words_in_line.map(function (word) {
+                            var indexes = [];
+                            word.split('/').filter(function (indx) { return indx !== ''; }).map(function (_) { return indexes.push(Number(_)); });
+                            indexes_wrapper_1.push(indexes);
+                        });
+                        index_list.push(indexes_wrapper_1);
+                        break;
+                    default:
+                        break;
+                }
+            };
+            /* read lines untill end of file */
             while (line = liner.next()) {
-                var words_in_line = line.toString().split(' ');
-                if (words_in_line.length === 0 || words_in_line[0] === '#') {
-                    continue;
-                }
-                var token = words_in_line.shift();
-                if (token === 'v') {
-                    var temp = [];
-                    for (var i = 0; i < 3; i++) {
-                        temp.push(Number(words_in_line[i]));
-                    }
-                    vertex_list.push(temp);
-                }
-                else if (token === 'vn') {
-                    var temp = [];
-                    for (var i = 0; i < 3; i++) {
-                        temp.push(Number(words_in_line[i]));
-                    }
-                    normal_list.push(temp);
-                }
-                else if (token === 'f') {
-                    var temp = [];
-                    for (var i = 0; i < 3; i++) {
-                        var temp2 = [];
-                        var indexes = words_in_line[i].split('/');
-                        for (var j = 0; j < indexes.length; j++) {
-                            if (indexes[j] !== '') {
-                                temp2.push(Number(indexes[j]));
-                            }
-                            else {
-                                temp2.push(null);
-                            }
-                        }
-                        temp.push(temp2);
-                    }
-                    index_list.push(temp);
-                }
+                _loop_1();
             }
-            for (var i = 0; i < index_list.length; i++) {
-                var element = index_list[i];
-                var p = [];
-                var n = [];
-                for (var j = 0; j < element.length; j++) {
-                    var vertex_p1 = vertex_list[element[j][0] - 1];
-                    var normal_p2 = normal_list[element[j][2] - 1];
-                    p.push(new Point_1.default(vertex_p1[0], vertex_p1[1], vertex_p1[2]));
-                    n.push(new Vector_1.default(normal_p2[0], normal_p2[1], normal_p2[2]));
-                }
-                _this._poligons.push(new Triangle_1.default(p[0], p[1], p[2], n[0], n[1], n[2]));
-            }
+            /* read indexes and create triangles with data from lists */
+            index_list.map(function (wrapper) {
+                var points = [];
+                var normals = [];
+                wrapper.map(function (indexes) {
+                    var vertex = vertex_list[indexes[0] - 1];
+                    var normal = normal_list[indexes[1] - 1];
+                    points.push(new Point_1.default(vertex[0], vertex[1], vertex[2]));
+                    normals.push(new Vector_1.default(normal[0], normal[1], normal[2]));
+                });
+                _this._poligons.push(new Triangle_1.default(points[0], points[1], points[2], normals[0], normals[1], normals[2]));
+            });
             return _this._poligons;
         };
         this._filepath = filepath;
         this._poligons = [];
     }
+    Object.defineProperty(ObjectReader.prototype, "poligons", {
+        /* in case same object used multiple times */
+        get: function () { return this._poligons; },
+        enumerable: false,
+        configurable: true
+    });
+    ;
     return ObjectReader;
 }());
 exports.default = ObjectReader;

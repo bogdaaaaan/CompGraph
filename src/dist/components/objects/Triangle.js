@@ -47,10 +47,6 @@ var Triangle = /** @class */ (function () {
             }
         };
         this.getNormalAtPoint = function (p) {
-            // const a = this._n2.mul(this._u);
-            // const b = this._n3.mul(this._v);
-            // const c = this._n1.mul(1-this._u-this._v);
-            // const res = (a.add(b.add(c))).toNormal();
             // return res;
             var edge1 = _this._v2.sub(p);
             var edge2 = _this._v3.sub(p);

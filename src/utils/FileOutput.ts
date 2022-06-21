@@ -3,6 +3,7 @@ import IOutput from './IOutput';
 
 const DEFAULT_BG_COLOR: number[] = [128,0,255];
 
+/* output in file can be written using info about output file path, height and width of scene and matrix with pixels */
 export default class FileOutput implements IOutput {
     private _matrix: number[][][];
     private _width: number;
@@ -20,6 +21,7 @@ export default class FileOutput implements IOutput {
         }
     }
 
+    /* fill in matrix with given coords and pixel data */
     public addElement = (x: number, elem: number): void => {
         if (x < this._width) {
             if (elem < 0) {
@@ -30,9 +32,8 @@ export default class FileOutput implements IOutput {
         }
     }
 
-    public displayRenderResult = (): void => {
-        let result_string: string = "";
-        result_string += `P3\n${this._width}-${this._height}\n255\n`;
+    public getOutput = (): void => {
+        let result_string: string = `P3\n${this._width} ${this._height}\n255\n`;
 
         for (let x = 0; x < this._width; x++) {
             for (let y = 0; y < this._height; y++) {
@@ -40,6 +41,7 @@ export default class FileOutput implements IOutput {
             }
         }
         
+        /* write result string into file */
         try {
             fs.writeFileSync(this._filename, result_string);
         } catch (error) {

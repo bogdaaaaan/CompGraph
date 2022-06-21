@@ -12,72 +12,68 @@ export default class ObjectReader {
         this._poligons = [];
     }
 
-    public readFile = (): Triangle[] => {
+    /* in case same object used multiple times */
+    public get poligons(): Triangle[]  { return this._poligons; };
+
+    public readObject = (): Triangle[] => {
+        /* using n-readlines module to read file line by line */
         const liner = new LineByLine(this._filepath);
 
         let line: any;
 
-        let vertex_list: number[][] = [];
-        let normal_list: number[][] = [];
-        let index_list: number[][][] = [];
+        /* create lists to which data will be pushed from file */
+        const vertex_list: number[][] = [];
+        const normal_list: number[][] = [];
+        const index_list: number[][][] = [];
 
+        /* read lines untill end of file */
         while (line = liner.next()) {
-            const words_in_line: string[] = line.toString().split(' ');
-            if (words_in_line.length === 0 || words_in_line[0] === '#') {
-                continue;
-            }
+            /* if line is empty or comment - skip it */
+            const words_in_line: string[] = line.toString().split(' ').filter((word: string) => word !== '')
+            if (words_in_line.length === 0 || words_in_line[0] === '#') continue;
 
-            const token: string | undefined = words_in_line.shift();
+            /* get first word from line that corresponds to list of vertices, list of vertex normals or vertex indices */
+            const parameter: string | undefined = words_in_line.shift();
 
-            if (token === 'v') {
-                let temp: number[] = [];
-
-                for (let i = 0; i < 3; i++) {
-                    temp.push(Number(words_in_line[i]))
-                }
-
-                vertex_list.push(temp);
-            } else if (token === 'vn') {
-                let temp: number[] = [];
-                
-                for (let i = 0; i < 3; i++) {
-                    temp.push(Number(words_in_line[i]))
-                }
-                normal_list.push(temp);
-            } else if (token === 'f') {
-                let temp: number[][] = [];
-                for (let i = 0; i < 3; i++) {
-                    let temp2: any[] = [];
-                    let indexes: string[] = words_in_line[i].split('/');
-
-                    for (let j = 0; j < indexes.length; j++) {
-                        if (indexes[j] !== '') {
-                            temp2.push(Number(indexes[j]));
-                        } else {
-                            temp2.push(null);
-                        }
-                    }
-                    temp.push(temp2);
-                }
-                index_list.push(temp);
+            /* push data from line in corresponding list */
+            switch (parameter) {
+                case 'v':
+                    const vertecies: number[] = [];
+                    words_in_line.map(_ => vertecies.push(Number(_)));
+                    vertex_list.push(vertecies);
+                    break;
+                case 'vn':
+                    const normals: number[] = [];
+                    words_in_line.map(_ => normals.push(Number(_)))
+                    normal_list.push(normals);
+                    break;
+                case 'f':
+                    const indexes_wrapper: number[][] = [];
+                    words_in_line.map(word => {
+                        const indexes: number[] = [];
+                        word.split('/').filter((indx: string) => indx !== '').map(_ => indexes.push(Number(_)));
+                        indexes_wrapper.push(indexes)
+                    });
+                    index_list.push(indexes_wrapper);
+                    break;
+                default:
+                    break;
             }
         }
 
-        for (let i = 0; i < index_list.length; i++) {
-            const element: number[][] = index_list[i];
-            const p: Point[] = [];
-            const n: Vector[] = [];
-
-            for (let j = 0; j < element.length; j++) {
-                const vertex_p1: number[] = vertex_list[element[j][0] - 1]
-                const normal_p2: number[] = normal_list[element[j][2] - 1]
+        /* read indexes and create triangles with data from lists */
+        index_list.map((wrapper: number[][]) => {
+            const points: Point[] = [];
+            const normals: Vector[] = [];
+            wrapper.map((indexes: number[]) => {
+                const vertex: number[] = vertex_list[indexes[0] - 1]
+                const normal: number[] = normal_list[indexes[1] - 1]
                 
-                p.push(new Point(vertex_p1[0], vertex_p1[1], vertex_p1[2]))
-                n.push(new Vector(normal_p2[0], normal_p2[1], normal_p2[2]));
-            }
-
-            this._poligons.push(new Triangle(p[0], p[1], p[2], n[0], n[1], n[2]));
-        }
+                points.push(new Point(vertex[0], vertex[1], vertex[2]))
+                normals.push(new Vector(normal[0], normal[1], normal[2]));
+            })
+            this._poligons.push(new Triangle(points[0], points[1], points[2], normals[0], normals[1], normals[2]));
+        })
         return this._poligons;
     }
 }

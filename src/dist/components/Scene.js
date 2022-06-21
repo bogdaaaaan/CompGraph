@@ -17,7 +17,7 @@ var Scene = /** @class */ (function () {
             }
         };
         this.render = function () {
-            var rays = _this._screen.getRays();
+            var rays = _this._camera.getRays();
             /* for each ray thrown at specific screen coordinates */
             rays.map(function (element) {
                 var object = null;
@@ -41,9 +41,9 @@ var Scene = /** @class */ (function () {
                     _this._output.addElement(element.pos, -1);
                 }
             });
-            _this._output.displayRenderResult();
+            _this._output.getOutput();
         };
-        this._screen = camera;
+        this._camera = camera;
         this._light = light;
         this._output = output;
     }

@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ConsoleOutput = /** @class */ (function () {
+    /* console output should have info about width and height of scene */
     function ConsoleOutput(width, height) {
         var _this = this;
+        /* fill in matrix with given coords and pixel data */
         this.addElement = function (x, elem) {
             if (x < _this._width) {
                 _this._matrix[x].push(elem);
             }
-            else {
-                console.log("Row index out of the image size");
-            }
         };
-        this.displayRenderResult = function () {
+        this.getOutput = function () {
             var result_string = '';
             for (var x = 0; x < _this._width; x++) {
                 for (var y = 0; y < _this._height; y++) {
+                    /* depending from light, pixels will have different corresponding symbols */
                     var dot = _this._matrix[x][y];
                     if (dot < 0) {
                         result_string += '-';
