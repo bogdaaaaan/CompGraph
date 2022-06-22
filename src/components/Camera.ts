@@ -23,12 +23,12 @@ export default class Camera {
 	}
 
 	/* create rays for specific screen coordinates */
-	public getRays = (): {ray: Ray, pos: number}[] => {
-		const rays: {ray: Ray, pos: number}[] = [];
+	public getRays = (): any[] => {
+		const rays: any[] = [];
 		for (let y = 0; y < this._height; y++) {
 			for (let x = 0; x < this._width; x++) {
-				const _ray: Ray = new Ray(this.getPoint(x,y).sub(this._location), this._location);
-				rays.push({ray: _ray, pos: y});
+				const _ray: Ray = new Ray(this.getPoint(x,y).sub(this._location).toNormal(), this._location);
+				rays.push({ray: _ray, pos:{x: x, y: y}});
 			}
 		}
 		return rays;
