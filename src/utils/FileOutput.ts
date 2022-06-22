@@ -22,13 +22,11 @@ export default class FileOutput implements IOutput {
     }
 
     /* fill in matrix with given coords and pixel data */
-    public addElement = (x: number, elem: number): void => {
-        if (x < this._width) {
-            if (elem < 0) {
-                this._matrix[x].push(DEFAULT_BG_COLOR);
-            } else {
-                this._matrix[x].push([Math.round(255 * elem), Math.round(255 * elem), Math.round(255 * elem)]);
-            }
+    public addElement = (x: number, y: number, elem: number): void => {
+        if (elem < 0) {
+            this._matrix[y][x] = DEFAULT_BG_COLOR;
+        } else {
+            this._matrix[y][x] = [Math.round(255 * elem), Math.round(255 * elem), Math.round(255 * elem)];
         }
     }
 

@@ -17,10 +17,8 @@ export default class ConsoleOutput implements IOutput {
     }
 
     /* fill in matrix with given coords and pixel data */
-    public addElement = (x: number, elem: number): void => {
-        if (x < this._width) {
-            this._matrix[x].push(elem);
-        }
+    public addElement = (x: number, y: number, elem: number): void => {
+        this._matrix[y][x] = elem;
     }
 
     public getOutput = (): void => {
