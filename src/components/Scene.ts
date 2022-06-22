@@ -5,6 +5,8 @@ import Point from "./Point";
 import Ray from "./Ray";
 import IObject from "./objects/IObject";
 import IOutput from '../utils/IOutput';
+import Triangle from "./objects/Triangle";
+import Sphere from "./objects/Sphere";
 
 export default class Scene {
     private _objects: IObject[] = [];
@@ -31,12 +33,32 @@ export default class Scene {
 		}
 	}
 
+	public caclShading = (ray: Ray, obj: IObject): Boolean => {
+		for (let i = 0; i < this._objects.length; i++) {
+			if (this._objects[i] !== obj) {
+				const _t_value: number = this._objects[i].intersectionWith(ray);
+				if (this._objects[i] instanceof Sphere) console.log(_t_value);
+				if (_t_value !== null) return true;
+			}
+		}
+		return false;
+	}
+
 	public render = (): void => {
-		const rays: {ray: Ray, pos: number}[] = this._camera.getRays();
+		const rays: any[] = this._camera.getRays();
 		/* for each ray thrown at specific screen coordinates */
-		rays.map(element => {
+
+		let counter = 0;
+		rays.map((element, indx) => {
+			counter++;
+			if (counter === Math.round(rays.length / 100)) {
+				//console.log(`Step ${indx+1}/${rays.length}`);
+				counter = 0;
+			}
+
 			let object: IObject = null;
 			let t_value: number = Infinity;
+
 			for (let i = 0; i < this._objects.length; i++) {
 				const _object: IObject = this._objects[i];
 				const _t_value: number = _object.intersectionWith(element.ray);
@@ -51,11 +73,15 @@ export default class Scene {
 			if (object != null) {
 				const intersectionPoint: Point = element.ray.getPointAt(t_value);
 				const normalAtPoint: Normal = object.getNormalAtPoint(intersectionPoint);
-				const light: number = this.calcLighting(normalAtPoint);
 
-				this._output.addElement(element.pos, light);
+				// if (this.caclShading(new Ray(this._light.direction, intersectionPoint), object)) {
+				//  	this._output.addElement(element.pos.x, element.pos.y, 0);
+				//  } else {
+					const light: number = this.calcLighting(normalAtPoint);
+					this._output.addElement(element.pos.x, element.pos.y, light);
+				//}
 			} else {
-				this._output.addElement(element.pos, -1);
+				this._output.addElement(element.pos.x, element.pos.y, -1);
 			}
 		})
 		this._output.getOutput();
