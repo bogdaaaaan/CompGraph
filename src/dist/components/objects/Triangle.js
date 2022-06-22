@@ -52,6 +52,14 @@ var Triangle = /** @class */ (function () {
             _this._n2 = matrix.multiplyNormal(_this._n2);
             _this._n3 = matrix.multiplyNormal(_this._n3);
         };
+        this.transform = function (matrix) {
+            _this._v1 = matrix.multiplyPoint(_this._v1);
+            _this._v2 = matrix.multiplyPoint(_this._v2);
+            _this._v3 = matrix.multiplyPoint(_this._v3);
+            _this._n1 = matrix.multiplyVector(_this._n1);
+            _this._n2 = matrix.multiplyVector(_this._n2);
+            _this._n3 = matrix.multiplyVector(_this._n3);
+        };
         this._v1 = a;
         this._v2 = b;
         this._v3 = c;
