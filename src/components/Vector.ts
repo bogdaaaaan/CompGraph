@@ -33,6 +33,11 @@ export default class Vector {
 		return new Vector(cx, cy, cz);
     }
 
+    /* reversed vector - vector with reversed values */
+    public reverse = (): Vector => {
+        return new Vector(-this._x, -this._y, -this._z);
+    }
+
     /* changing lengths of vector to 1 */
     public normalize = (): Vector => {
         let len = Math.sqrt(this.x ** 2 + this.y ** 2 + this.z ** 2);
