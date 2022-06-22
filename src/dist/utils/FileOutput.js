@@ -7,14 +7,12 @@ var FileOutput = /** @class */ (function () {
     function FileOutput(width, height, filename) {
         var _this = this;
         /* fill in matrix with given coords and pixel data */
-        this.addElement = function (x, elem) {
-            if (x < _this._width) {
-                if (elem < 0) {
-                    _this._matrix[x].push(DEFAULT_BG_COLOR);
-                }
-                else {
-                    _this._matrix[x].push([Math.round(255 * elem), Math.round(255 * elem), Math.round(255 * elem)]);
-                }
+        this.addElement = function (x, y, elem) {
+            if (elem < 0) {
+                _this._matrix[y][x] = DEFAULT_BG_COLOR;
+            }
+            else {
+                _this._matrix[y][x] = [Math.round(255 * elem), Math.round(255 * elem), Math.round(255 * elem)];
             }
         };
         this.getOutput = function () {

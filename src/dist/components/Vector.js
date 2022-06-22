@@ -19,6 +19,10 @@ var Vector = /** @class */ (function () {
             var cz = _this.x * v.y - _this.y * v.x;
             return new Vector(cx, cy, cz);
         };
+        /* reversed vector - vector with reversed values */
+        this.reverse = function () {
+            return new Vector(-_this._x, -_this._y, -_this._z);
+        };
         /* changing lengths of vector to 1 */
         this.normalize = function () {
             var len = Math.sqrt(Math.pow(_this.x, 2) + Math.pow(_this.y, 2) + Math.pow(_this.z, 2));

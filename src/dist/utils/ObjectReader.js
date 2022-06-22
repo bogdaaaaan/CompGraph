@@ -1,9 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var LineByLine = require("n-readlines");
-var Triangle_1 = require("../components/objects/Triangle");
-var Point_1 = require("../components/Point");
-var Vector_1 = require("../components/Vector");
 var ObjectReader = /** @class */ (function () {
     function ObjectReader(filepath) {
         var _this = this;
@@ -51,30 +48,11 @@ var ObjectReader = /** @class */ (function () {
             while (line = liner.next()) {
                 _loop_1();
             }
-            /* read indexes and create triangles with data from lists */
-            index_list.map(function (wrapper) {
-                var points = [];
-                var normals = [];
-                wrapper.map(function (indexes) {
-                    var vertex = vertex_list[indexes[0] - 1];
-                    var normal = normal_list[indexes[1] - 1];
-                    points.push(new Point_1.default(vertex[0], vertex[1], vertex[2]));
-                    normals.push(new Vector_1.default(normal[0], normal[1], normal[2]));
-                });
-                _this._poligons.push(new Triangle_1.default(points[0], points[1], points[2], normals[0], normals[1], normals[2]));
-            });
-            return _this._poligons;
+            console.log("Finished reading file ".concat(_this._filepath));
+            return [vertex_list, normal_list, index_list];
         };
         this._filepath = filepath;
-        this._poligons = [];
     }
-    Object.defineProperty(ObjectReader.prototype, "poligons", {
-        /* in case same object used multiple times */
-        get: function () { return this._poligons; },
-        enumerable: false,
-        configurable: true
-    });
-    ;
     return ObjectReader;
 }());
 exports.default = ObjectReader;

@@ -5,10 +5,8 @@ var ConsoleOutput = /** @class */ (function () {
     function ConsoleOutput(width, height) {
         var _this = this;
         /* fill in matrix with given coords and pixel data */
-        this.addElement = function (x, elem) {
-            if (x < _this._width) {
-                _this._matrix[x].push(elem);
-            }
+        this.addElement = function (x, y, elem) {
+            _this._matrix[y][x] = elem;
         };
         this.getOutput = function () {
             var result_string = '';

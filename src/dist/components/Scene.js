@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var Sphere_1 = require("./objects/Sphere");
 var Scene = /** @class */ (function () {
     function Scene(camera, light, output) {
         var _this = this;
@@ -16,10 +17,28 @@ var Scene = /** @class */ (function () {
                 return dotProduct;
             }
         };
+        this.caclShading = function (ray, obj) {
+            for (var i = 0; i < _this._objects.length; i++) {
+                if (_this._objects[i] !== obj) {
+                    var _t_value = _this._objects[i].intersectionWith(ray);
+                    if (_this._objects[i] instanceof Sphere_1.default)
+                        console.log(_t_value);
+                    if (_t_value !== null)
+                        return true;
+                }
+            }
+            return false;
+        };
         this.render = function () {
             var rays = _this._camera.getRays();
             /* for each ray thrown at specific screen coordinates */
-            rays.map(function (element) {
+            var counter = 0;
+            rays.map(function (element, indx) {
+                counter++;
+                if (counter === Math.round(rays.length / 100)) {
+                    //console.log(`Step ${indx+1}/${rays.length}`);
+                    counter = 0;
+                }
                 var object = null;
                 var t_value = Infinity;
                 for (var i = 0; i < _this._objects.length; i++) {
@@ -34,11 +53,15 @@ var Scene = /** @class */ (function () {
                 if (object != null) {
                     var intersectionPoint = element.ray.getPointAt(t_value);
                     var normalAtPoint = object.getNormalAtPoint(intersectionPoint);
+                    // if (this.caclShading(new Ray(this._light.direction, intersectionPoint), object)) {
+                    //  	this._output.addElement(element.pos.x, element.pos.y, 0);
+                    //  } else {
                     var light = _this.calcLighting(normalAtPoint);
-                    _this._output.addElement(element.pos, light);
+                    _this._output.addElement(element.pos.x, element.pos.y, light);
+                    //}
                 }
                 else {
-                    _this._output.addElement(element.pos, -1);
+                    _this._output.addElement(element.pos.x, element.pos.y, -1);
                 }
             });
             _this._output.getOutput();

@@ -15,8 +15,8 @@ var Camera = /** @class */ (function () {
             var rays = [];
             for (var y = 0; y < _this._height; y++) {
                 for (var x = 0; x < _this._width; x++) {
-                    var _ray = new Ray_1.default(_this.getPoint(x, y).sub(_this._location), _this._location);
-                    rays.push({ ray: _ray, pos: y });
+                    var _ray = new Ray_1.default(_this.getPoint(x, y).sub(_this._location).toNormal(), _this._location);
+                    rays.push({ ray: _ray, pos: { x: x, y: y } });
                 }
             }
             return rays;
