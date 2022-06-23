@@ -33,19 +33,9 @@ export default class Vector {
 		return new Vector(cx, cy, cz);
     }
 
-    /* reversed vector - vector with reversed values */
-    public reverse = (): Vector => {
-        return new Vector(-this._x, -this._y, -this._z);
-    }
-
-    /* changing lengths of vector to 1 */
-    public normalize = (): Vector => {
-        let len = Math.sqrt(this.x ** 2 + this.y ** 2 + this.z ** 2);
-        return new Vector(this.x / len, this.y / len, this.z / len);
-    }
+    /* returns a length of vector */
+    public length = (): number => { return Math.sqrt(this.x ** 2 + this.y ** 2 + this.z ** 2) }
 
     /* Transform vector into normal */
-    public toNormal = (): Normal => {
-		return Normal.create(this._x, this._y, this._z);
-	}
+    public toNormal = (): Normal => { return Normal.create(this._x, this._y, this._z) }
 }
