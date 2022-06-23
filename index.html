@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPM Viewer</title>
+    <style>
+        * {
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            font-size: 1.1em;
+            color: black;
+            font-family: sans-serif;
+        }
+
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        input[type=file]::file-selector-button {
+            padding: 25px 35px;
+            margin: 25px 0;
+            background-color: white;
+            border: 2px solid black;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 25px 35px;
+            margin: 25px 0;
+            background-color: white;
+            border: 2px solid black;
+            cursor: pointer;
+        }
+
+        .result__header {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <input type="file" name="file" id="file_input" accept=".ppm, .txt">
+        <button class="btn" id="reload">Reload</button>
+        <div class="result">
+            <h3 class="result__header">Result:</h3>
+        </div>
+    </div>
+
+    <script>
+        const file_input = document.getElementById('file_input');
+        const reload = document.getElementById('reload');
+
+        const file_reader = new FileReader();
+
+        file_reader.addEventListener('load', (event) => {
+            const ppm_image = event.target.result.split('\n').slice(1);
+            const [width, height] = ppm_image.shift().split(' ');
+
+            ppm_image.shift();
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            document.querySelector('.result').append(canvas);
+            
+            const ctx = canvas.getContext('2d');
+            
+            const res = [];
+            for (let i = 0; i < height; i++) {
+                res.push([]);
+                for (let j = 0; j < width; j++) {
+                    res[i][j] = 0;
+                }
+            }
+
+            let y = 0;
+            let x = 0;
+
+            for (let i = 0; i < ppm_image.length - 1; i++) {
+                res[y][x] = ppm_image[i];
+                ++x;
+                if (x == width) {
+                    x = 0;
+                    ++y;
+                }
+            }
+
+            for (let i = 0; i < res.length; i++) {
+                for (let j = 0; j < res[i].length; j++) {
+                    const [r,g,b] = res[i][j].split(' ');
+                    ctx.fillStyle = `rgb(${Number(r)}, ${Number(g)}, ${Number(b)})`;
+                    ctx.fillRect(j, i, 1, 1)
+                }
+            }
+        })  
+
+        let file = null;
+
+        file_input.addEventListener('change', (e) => {
+            file = e.target.files[0];
+            file_reader.readAsText(file);
+        })
+
+        reload.addEventListener('click', (e) => {
+            file_reader.readAsText(file);
+        })
+    </script>
+</body>
+</html>
