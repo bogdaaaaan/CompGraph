@@ -34,7 +34,7 @@ var Scene = /** @class */ (function () {
             rays.map(function (element, indx) {
                 counter++;
                 if (counter === Math.round(rays.length / 100)) {
-                    //console.log(`Step ${indx+1}/${rays.length}`);
+                    console.log("Step ".concat(indx + 1, "/").concat(rays.length));
                     counter = 0;
                 }
                 var object = null;

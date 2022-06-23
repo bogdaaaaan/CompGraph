@@ -51,7 +51,7 @@ export default class Scene {
 		rays.map((element, indx) => {
 			counter++;
 			if (counter === Math.round(rays.length / 100)) {
-				//console.log(`Step ${indx+1}/${rays.length}`);
+				console.log(`Step ${indx+1}/${rays.length}`);
 				counter = 0;
 			}
 
