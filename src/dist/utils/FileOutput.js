@@ -12,7 +12,7 @@ var FileOutput = /** @class */ (function () {
                 _this._matrix[y][x] = DEFAULT_BG_COLOR;
             }
             else {
-                _this._matrix[y][x] = [Math.round(255 * elem), Math.round(255 * elem), Math.round(255 * elem)];
+                _this._matrix[y][x] = [Math.round(126 * elem), Math.round(69 * elem), Math.round(52 * elem)];
             }
         };
         this.getOutput = function () {
