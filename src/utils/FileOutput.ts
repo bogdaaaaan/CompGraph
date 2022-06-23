@@ -16,13 +16,13 @@ export default class FileOutput implements IOutput {
         this._filename = filename;
 
         this._matrix = [];     
-        for (let i = 0; i < width; i++) {
+        for (let i = 0; i < height; i++) {
             this._matrix.push([]);
         }
     }
 
     /* fill in matrix with given coords and pixel data */
-    public addElement = (x: number, y: number, elem: number): void => {
+    public addElement = (y: number, x: number, elem: number): void => {
         if (elem < 0) {
             this._matrix[y][x] = DEFAULT_BG_COLOR;
         } else {
@@ -33,9 +33,9 @@ export default class FileOutput implements IOutput {
     public getOutput = (): void => {
         let result_string: string = `P3\n${this._width} ${this._height}\n255\n`;
 
-        for (let x = 0; x < this._width; x++) {
-            for (let y = 0; y < this._height; y++) {
-                result_string += `${this._matrix[x][y][0]} ${this._matrix[x][y][1]} ${this._matrix[x][y][2]}\n`;
+        for (let y = 0; y < this._height; y++) {
+            for (let x = 0; x < this._width; x++) {
+                result_string += `${this._matrix[y][x][0]} ${this._matrix[y][x][1]} ${this._matrix[y][x][2]}\n`;
             }
         }
         
