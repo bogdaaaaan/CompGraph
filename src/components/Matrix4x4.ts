@@ -72,7 +72,7 @@ export default class Matrix4x4 {
                 res[i] += this._matrix[i][j] * vector4[j];
             }
         }
-
+        
         return new Point(res[0], res[1], res[2]);
     }
 
@@ -90,9 +90,6 @@ export default class Matrix4x4 {
                 points.push(this.multiplyPoint(new Point(vertex[0], vertex[1], vertex[2])))
                 normals.push(this.multiplyNormal(new Vector(normal[0], normal[1], normal[2])));
             })
-            // const cntr_clockwise_p: Point[] = points.reverse();
-            // const cntr_clockwise_n: Normal[] = normals.reverse();
-
             poligons.push(new Triangle(points[0], points[1], points[2], normals[0], normals[1], normals[2]));
         })
         return poligons;
@@ -122,7 +119,6 @@ export default class Matrix4x4 {
         if (x_angle) this.rotateX(x_angle);
         if (y_angle) this.rotateY(y_angle);
         if (z_angle) this.rotateZ(z_angle);
-        
     }
 
     public rotateX = (x_angle: number): void => {

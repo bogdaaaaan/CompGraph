@@ -19,19 +19,10 @@ var Vector = /** @class */ (function () {
             var cz = _this.x * v.y - _this.y * v.x;
             return new Vector(cx, cy, cz);
         };
-        /* reversed vector - vector with reversed values */
-        this.reverse = function () {
-            return new Vector(-_this._x, -_this._y, -_this._z);
-        };
-        /* changing lengths of vector to 1 */
-        this.normalize = function () {
-            var len = Math.sqrt(Math.pow(_this.x, 2) + Math.pow(_this.y, 2) + Math.pow(_this.z, 2));
-            return new Vector(_this.x / len, _this.y / len, _this.z / len);
-        };
+        /* returns a length of vector */
+        this.length = function () { return Math.sqrt(Math.pow(_this.x, 2) + Math.pow(_this.y, 2) + Math.pow(_this.z, 2)); };
         /* Transform vector into normal */
-        this.toNormal = function () {
-            return Normal_1.default.create(_this._x, _this._y, _this._z);
-        };
+        this.toNormal = function () { return Normal_1.default.create(_this._x, _this._y, _this._z); };
         this._x = x;
         this._y = y;
         this._z = z;

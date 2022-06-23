@@ -27,9 +27,7 @@ var Sphere = /** @class */ (function () {
                 return null;
             }
         };
-        this.getNormalAtPoint = function (p) {
-            return p.sub(_this._center).toNormal();
-        };
+        this.getNormalAtPoint = function (p) { return p.sub(_this._center).toNormal(); };
         this._center = center;
         this._radius = radius;
     }

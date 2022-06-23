@@ -13,12 +13,7 @@ var Plane = /** @class */ (function () {
                 var center_origin = _this._center.sub(ray.origin);
                 /* computing a position of intersection point with ray */
                 var t = center_origin.dot(_this._normal) / denom;
-                if (t >= 0) {
-                    return t;
-                }
-                else {
-                    return null;
-                }
+                return t >= 0 ? t : null;
             }
             return null;
         };

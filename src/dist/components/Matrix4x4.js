@@ -70,8 +70,6 @@ var Matrix4x4 = /** @class */ (function () {
                     points.push(_this.multiplyPoint(new Point_1.default(vertex[0], vertex[1], vertex[2])));
                     normals.push(_this.multiplyNormal(new Vector_1.default(normal[0], normal[1], normal[2])));
                 });
-                // const cntr_clockwise_p: Point[] = points.reverse();
-                // const cntr_clockwise_n: Normal[] = normals.reverse();
                 poligons.push(new Triangle_1.default(points[0], points[1], points[2], normals[0], normals[1], normals[2]));
             });
             return poligons;

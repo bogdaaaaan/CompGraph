@@ -63,8 +63,13 @@
             const ppm_image = event.target.result.split('\n').slice(1);
             const [width, height] = ppm_image.shift().split(' ');
 
+            if (!!document.getElementById('canv')) {
+                document.querySelector('.result').removeChild(document.getElementById('canv'));
+            }
+
             ppm_image.shift();
             const canvas = document.createElement('canvas');
+            canvas.id = 'canv';
             canvas.width = width;
             canvas.height = height;
             document.querySelector('.result').append(canvas);
@@ -98,6 +103,8 @@
                     ctx.fillRect(j, i, 1, 1)
                 }
             }
+
+            reload.style.backgroundColor = "white";
         })  
 
         let file = null;
@@ -108,6 +115,7 @@
         })
 
         reload.addEventListener('click', (e) => {
+            reload.style.backgroundColor = "green";
             file_reader.readAsText(file);
         })
     </script>

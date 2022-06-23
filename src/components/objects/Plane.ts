@@ -30,11 +30,7 @@ export default class Plane implements IObject {
 			/* computing a position of intersection point with ray */
 			let t = center_origin.dot(this._normal) / denom;
 
-			if (t >= 0) {
-				return t;
-			} else {
-				return null;
-			}
+			return t >= 0 ? t : null;
 		}
 		return null;
 	}

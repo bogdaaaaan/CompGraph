@@ -1,13 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Ray_1 = require("./Ray");
+/* main scene has camera, light and output */
 var Scene = /** @class */ (function () {
     function Scene(camera, light, output) {
         var _this = this;
         this._objects = [];
+        /* adds object to list of objects */
         this.addObject = function (obj) {
             _this._objects.push(obj);
         };
+        /* depending on difference between light and object's normal, calculates lighting */
         this.calcLighting = function (normalAtPoint) {
             var dotProduct = _this._light.direction.dot(normalAtPoint);
             if (dotProduct < 0) {
@@ -17,7 +20,9 @@ var Scene = /** @class */ (function () {
                 return dotProduct;
             }
         };
+        /* calculates shadows */
         this.caclShading = function (ray, obj) {
+            /* check all other objects untill first intersection found */
             for (var i = 0; i < _this._objects.length; i++) {
                 if (_this._objects[i] !== obj) {
                     var _t_value = _this._objects[i].intersectionWith(ray);
@@ -27,16 +32,19 @@ var Scene = /** @class */ (function () {
             }
             return false;
         };
+        /* main method */
         this.render = function () {
             var rays = _this._camera.getRays();
-            /* for each ray thrown at specific screen coordinates */
             var counter = 0;
+            /* for each ray thrown at specific screen coordinates */
             rays.map(function (element, indx) {
+                /* helper console output */
                 counter++;
                 if (counter === Math.round(rays.length / 100)) {
                     console.log("Step ".concat(indx + 1, "/").concat(rays.length));
                     counter = 0;
                 }
+                /* finding closest object */
                 var object = null;
                 var t_value = Infinity;
                 for (var i = 0; i < _this._objects.length; i++) {
@@ -51,6 +59,7 @@ var Scene = /** @class */ (function () {
                 if (object != null) {
                     var intersectionPoint = element.ray.getPointAt(t_value);
                     var normalAtPoint = object.getNormalAtPoint(intersectionPoint);
+                    /* if ray thrown from intersection point in direction of light intersects another object - this object is in shadow */
                     if (_this.caclShading(new Ray_1.default(_this._light.direction, intersectionPoint), object)) {
                         _this._output.addElement(element.pos.y, element.pos.x, 0);
                     }

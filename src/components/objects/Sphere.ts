@@ -42,7 +42,5 @@ export default class Sphere implements IObject {
 		}
 	}
 
-	public getNormalAtPoint = (p: Point): Normal => {
-		return p.sub(this._center).toNormal();
-	}
+	public getNormalAtPoint = (p: Point): Normal => { return p.sub(this._center).toNormal() }
 }
