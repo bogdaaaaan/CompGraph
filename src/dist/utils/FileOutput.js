@@ -7,7 +7,7 @@ var FileOutput = /** @class */ (function () {
     function FileOutput(width, height, filename) {
         var _this = this;
         /* fill in matrix with given coords and pixel data */
-        this.addElement = function (x, y, elem) {
+        this.addElement = function (y, x, elem) {
             if (elem < 0) {
                 _this._matrix[y][x] = DEFAULT_BG_COLOR;
             }
@@ -17,9 +17,9 @@ var FileOutput = /** @class */ (function () {
         };
         this.getOutput = function () {
             var result_string = "P3\n".concat(_this._width, " ").concat(_this._height, "\n255\n");
-            for (var x = 0; x < _this._width; x++) {
-                for (var y = 0; y < _this._height; y++) {
-                    result_string += "".concat(_this._matrix[x][y][0], " ").concat(_this._matrix[x][y][1], " ").concat(_this._matrix[x][y][2], "\n");
+            for (var y = 0; y < _this._height; y++) {
+                for (var x = 0; x < _this._width; x++) {
+                    result_string += "".concat(_this._matrix[y][x][0], " ").concat(_this._matrix[y][x][1], " ").concat(_this._matrix[y][x][2], "\n");
                 }
             }
             /* write result string into file */
@@ -34,7 +34,7 @@ var FileOutput = /** @class */ (function () {
         this._width = width;
         this._filename = filename;
         this._matrix = [];
-        for (var i = 0; i < width; i++) {
+        for (var i = 0; i < height; i++) {
             this._matrix.push([]);
         }
     }

@@ -74,13 +74,13 @@ export default class Scene {
 				const normalAtPoint: Normal = object.getNormalAtPoint(intersectionPoint);
 
 				if (this.caclShading(new Ray(this._light.direction, intersectionPoint), object)) {
-				 	this._output.addElement(element.pos.x, element.pos.y, 0);
+				 	this._output.addElement(element.pos.y, element.pos.x, 0);
 				 } else {
 					const light: number = this.calcLighting(normalAtPoint);
-					this._output.addElement(element.pos.x, element.pos.y, light);
+					this._output.addElement(element.pos.y, element.pos.x, light);
 				}
 			} else {
-				this._output.addElement(element.pos.x, element.pos.y, -1);
+				this._output.addElement(element.pos.y, element.pos.x, -1);
 			}
 		})
 		this._output.getOutput();

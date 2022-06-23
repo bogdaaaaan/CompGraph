@@ -52,15 +52,15 @@ var Scene = /** @class */ (function () {
                     var intersectionPoint = element.ray.getPointAt(t_value);
                     var normalAtPoint = object.getNormalAtPoint(intersectionPoint);
                     if (_this.caclShading(new Ray_1.default(_this._light.direction, intersectionPoint), object)) {
-                        _this._output.addElement(element.pos.x, element.pos.y, 0);
+                        _this._output.addElement(element.pos.y, element.pos.x, 0);
                     }
                     else {
                         var light = _this.calcLighting(normalAtPoint);
-                        _this._output.addElement(element.pos.x, element.pos.y, light);
+                        _this._output.addElement(element.pos.y, element.pos.x, light);
                     }
                 }
                 else {
-                    _this._output.addElement(element.pos.x, element.pos.y, -1);
+                    _this._output.addElement(element.pos.y, element.pos.x, -1);
                 }
             });
             _this._output.getOutput();
