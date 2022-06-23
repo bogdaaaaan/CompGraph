@@ -11,24 +11,21 @@ var Triangle = /** @class */ (function () {
             var edge2 = _this._v3.sub(_this._v1);
             var pvec = dir.cross(edge2);
             var det = edge1.dot(pvec);
-            if (det < _this._eps) {
+            if (det === 0) {
                 return null;
             }
+            var inv_det = 1 / det;
             var tvec = orig.sub(_this._v1);
-            var u = tvec.dot(pvec);
-            if (u < 0 || u > det) {
+            var u = tvec.dot(pvec) * inv_det;
+            if (u < 0 || u > 1) {
                 return null;
             }
             var qvec = tvec.cross(edge1);
-            var v = dir.dot(qvec);
-            if (v < 0 || u + v > det) {
+            var v = dir.dot(qvec) * inv_det;
+            if (v < 0 || u + v > 1) {
                 return null;
             }
-            var t = edge2.dot(qvec);
-            var inv_det = 1 / det;
-            t *= inv_det;
-            u *= inv_det;
-            v *= inv_det;
+            var t = edge2.dot(qvec) * inv_det;
             _this._u = u;
             _this._v = v;
             if (t >= 0) {
@@ -51,14 +48,6 @@ var Triangle = /** @class */ (function () {
             _this._n1 = matrix.multiplyNormal(_this._n1);
             _this._n2 = matrix.multiplyNormal(_this._n2);
             _this._n3 = matrix.multiplyNormal(_this._n3);
-        };
-        this.transform = function (matrix) {
-            _this._v1 = matrix.multiplyPoint(_this._v1);
-            _this._v2 = matrix.multiplyPoint(_this._v2);
-            _this._v3 = matrix.multiplyPoint(_this._v3);
-            _this._n1 = matrix.multiplyVector(_this._n1);
-            _this._n2 = matrix.multiplyVector(_this._n2);
-            _this._n3 = matrix.multiplyVector(_this._n3);
         };
         this._v1 = a;
         this._v2 = b;

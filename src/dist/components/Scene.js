@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Sphere_1 = require("./objects/Sphere");
+var Ray_1 = require("./Ray");
 var Scene = /** @class */ (function () {
     function Scene(camera, light, output) {
         var _this = this;
@@ -21,9 +21,7 @@ var Scene = /** @class */ (function () {
             for (var i = 0; i < _this._objects.length; i++) {
                 if (_this._objects[i] !== obj) {
                     var _t_value = _this._objects[i].intersectionWith(ray);
-                    if (_this._objects[i] instanceof Sphere_1.default)
-                        console.log(_t_value);
-                    if (_t_value !== null)
+                    if (_t_value > 0)
                         return true;
                 }
             }
@@ -53,12 +51,13 @@ var Scene = /** @class */ (function () {
                 if (object != null) {
                     var intersectionPoint = element.ray.getPointAt(t_value);
                     var normalAtPoint = object.getNormalAtPoint(intersectionPoint);
-                    // if (this.caclShading(new Ray(this._light.direction, intersectionPoint), object)) {
-                    //  	this._output.addElement(element.pos.x, element.pos.y, 0);
-                    //  } else {
-                    var light = _this.calcLighting(normalAtPoint);
-                    _this._output.addElement(element.pos.x, element.pos.y, light);
-                    //}
+                    if (_this.caclShading(new Ray_1.default(_this._light.direction, intersectionPoint), object)) {
+                        _this._output.addElement(element.pos.x, element.pos.y, 0);
+                    }
+                    else {
+                        var light = _this.calcLighting(normalAtPoint);
+                        _this._output.addElement(element.pos.x, element.pos.y, light);
+                    }
                 }
                 else {
                     _this._output.addElement(element.pos.x, element.pos.y, -1);

@@ -37,8 +37,7 @@ export default class Scene {
 		for (let i = 0; i < this._objects.length; i++) {
 			if (this._objects[i] !== obj) {
 				const _t_value: number = this._objects[i].intersectionWith(ray);
-				if (this._objects[i] instanceof Sphere) console.log(_t_value);
-				if (_t_value !== null) return true;
+				if (_t_value > 0) return true;
 			}
 		}
 		return false;
@@ -74,12 +73,12 @@ export default class Scene {
 				const intersectionPoint: Point = element.ray.getPointAt(t_value);
 				const normalAtPoint: Normal = object.getNormalAtPoint(intersectionPoint);
 
-				// if (this.caclShading(new Ray(this._light.direction, intersectionPoint), object)) {
-				//  	this._output.addElement(element.pos.x, element.pos.y, 0);
-				//  } else {
+				if (this.caclShading(new Ray(this._light.direction, intersectionPoint), object)) {
+				 	this._output.addElement(element.pos.x, element.pos.y, 0);
+				 } else {
 					const light: number = this.calcLighting(normalAtPoint);
 					this._output.addElement(element.pos.x, element.pos.y, light);
-				//}
+				}
 			} else {
 				this._output.addElement(element.pos.x, element.pos.y, -1);
 			}

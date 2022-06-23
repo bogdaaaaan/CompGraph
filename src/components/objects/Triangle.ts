@@ -41,30 +41,27 @@ export default class Triangle implements IObject {
         const pvec: Vector = dir.cross(edge2);
         const det: number = edge1.dot(pvec)
 
-        if (det < this._eps){
+        if (det === 0){
             return null;
         }
+        const inv_det: number = 1 / det;
 
         const tvec: Vector = orig.sub(this._v1);
-        let u: number = tvec.dot(pvec);
+        
+        let u: number = tvec.dot(pvec) * inv_det;
 
-        if (u < 0 || u > det) {
+        if (u < 0 || u > 1) {
             return null;
         }
 
         const qvec: Vector = tvec.cross(edge1);
-        let v: number = dir.dot(qvec);
+        let v: number = dir.dot(qvec) * inv_det;
 
-        if (v < 0 || u + v > det) {
+        if (v < 0 || u + v > 1) {
             return null;
         }
 
-        let t: number = edge2.dot(qvec);
-        const inv_det: number = 1 / det;
-
-        t *= inv_det;
-        u *= inv_det;
-        v *= inv_det;
+        let t: number = edge2.dot(qvec) * inv_det;
 
         this._u = u;
         this._v = v;
@@ -94,13 +91,4 @@ export default class Triangle implements IObject {
         this._n3 = matrix.multiplyNormal(this._n3);
     }
 
-    transform = (matrix: Matrix4x4): void => {
-        this._v1 = matrix.multiplyPoint(this._v1);
-        this._v2 = matrix.multiplyPoint(this._v2);
-        this._v3 = matrix.multiplyPoint(this._v3);
-
-        this._n1 = matrix.multiplyVector(this._n1);
-        this._n2 = matrix.multiplyVector(this._n2);
-        this._n3 = matrix.multiplyVector(this._n3);
-    }
 }
