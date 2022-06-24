@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.convertSeconds = void 0;
+/* funciton to convert seconds into readable format */
 var convertSeconds = function (seconds) {
     var d = seconds;
     var h = Math.floor(d / 3600);

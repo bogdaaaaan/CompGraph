@@ -84,7 +84,7 @@ export default class Scene {
 				/* if ray thrown from intersection point in direction of light intersects another object - this object is in shadow */
 				if (this.caclShading(new Ray(this._light.direction, intersectionPoint), object)) {
 				 	this._output.addElement(element.pos.y, element.pos.x, 0);
-				 } else {
+				} else {
 					const light: number = this.calcLighting(normalAtPoint);
 					this._output.addElement(element.pos.y, element.pos.x, light);
 				}

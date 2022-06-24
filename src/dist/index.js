@@ -9,12 +9,13 @@ var FileOutput_1 = require("./utils/FileOutput");
 var ObjectReader_1 = require("./utils/ObjectReader");
 var Matrix4x4_1 = require("./components/Matrix4x4");
 var FilesService_1 = require("./utils/FilesService");
+var secondsFormat_1 = require("./utils/secondsFormat");
 var DEFAULT_BG_COLOR = [128, 0, 255]; // magenta
-var COLOR = [126, 69, 52]; // brown
+var COLOR = [255, 255, 255]; //[126, 69, 52]; // brown
 var DEFAULT_FILES_PATH = 'C:\\Users\\bodya\\Desktop\\Graphics\\CompGraph\\assets\\';
 var WIDTH = 680;
 var HEIGHT = 480;
-var SCREEN_OFFSET = 700;
+var SCREEN_OFFSET = 1200;
 var CAMERA_POS = WIDTH + SCREEN_OFFSET;
 /* get files paths */
 var filesService = new FilesService_1.default(DEFAULT_FILES_PATH);
@@ -35,9 +36,9 @@ var lists = objectReader.readObject();
 /* transformation matrix */
 var matrix = new Matrix4x4_1.default();
 /* operations in order of transition, rotation and scale */
-//matrix.move(-80, -80, 0);
-matrix.rotate(270, 0, 310);
-matrix.scale(800);
+matrix.move(0, -340, 0);
+matrix.rotate(0, 315, 0);
+matrix.scale(600);
 /* create poligons from transformed matrix and object data */
 var poligons = matrix.transformObject(lists[0], lists[1], lists[2]);
 poligons.map(function (p) { return scene.addObject(p); });
@@ -47,7 +48,8 @@ poligons.map(function (p) { return scene.addObject(p); });
 var start = performance.now();
 scene.render();
 var end = performance.now();
-console.log("Time elapsed: ".concat(Math.round((end - start) / 1000), "s"));
+console.log((end - start) / 1000);
+console.log("Time elapsed: ".concat((0, secondsFormat_1.convertSeconds)(Math.round((end - start) / 1000))));
 /*
     y ^
       |

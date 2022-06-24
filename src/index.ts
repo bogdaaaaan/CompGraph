@@ -13,16 +13,17 @@ import ObjectReader from './utils/ObjectReader';
 import IOutput from "./utils/IOutput";
 import Matrix4x4 from "./components/Matrix4x4";
 import FilesService from "./utils/FilesService";
+import {convertSeconds} from './utils/secondsFormat';
 
 const DEFAULT_BG_COLOR: number[] = [128,0,255]; // magenta
-const COLOR: number[] = [126, 69, 52]; // brown
+const COLOR: number[] = [255,255,255];//[126, 69, 52]; // brown
 
 const DEFAULT_FILES_PATH: string = 'C:\\Users\\bodya\\Desktop\\Graphics\\CompGraph\\assets\\';
 
 const WIDTH: number = 680;
 const HEIGHT: number = 480;
 
-const SCREEN_OFFSET: number = 700;
+const SCREEN_OFFSET: number = 1200;
 const CAMERA_POS: number = WIDTH + SCREEN_OFFSET;
 
 /* get files paths */
@@ -49,9 +50,9 @@ const lists: any[] = objectReader.readObject();
 const matrix: Matrix4x4 = new Matrix4x4();
 
 /* operations in order of transition, rotation and scale */
-//matrix.move(-80, -80, 0);
-matrix.rotate(270, 0, 310);
-matrix.scale(800);
+matrix.move(0, -340, 0);
+matrix.rotate(0, 315, 0);
+matrix.scale(600);
 
 /* create poligons from transformed matrix and object data */
 const poligons: Triangle[] = matrix.transformObject(lists[0], lists[1], lists[2]);
@@ -64,7 +65,8 @@ poligons.map(p => scene.addObject(p));
 const start: number = performance.now();
 scene.render();
 const end: number = performance.now();
-console.log(`Time elapsed: ${Math.round((end - start)/1000)}s`)
+console.log((end - start)/1000);
+console.log(`Time elapsed: ${convertSeconds(Math.round((end - start)/1000))}`);
 
 /*                   
     y ^              
