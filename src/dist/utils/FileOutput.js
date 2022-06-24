@@ -1,18 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs");
-var DEFAULT_BG_COLOR = [128, 0, 255];
 /* output in file can be written using info about output file path, height and width of scene and matrix with pixels */
 var FileOutput = /** @class */ (function () {
-    function FileOutput(width, height, filename) {
+    function FileOutput(width, height, filename, color, bg_color) {
         var _this = this;
         /* fill in matrix with given coords and pixel data */
         this.addElement = function (y, x, elem) {
             if (elem < 0) {
-                _this._matrix[y][x] = DEFAULT_BG_COLOR;
+                _this._matrix[y][x] = _this._bg_color;
             }
             else {
-                _this._matrix[y][x] = [Math.round(126 * elem), Math.round(69 * elem), Math.round(52 * elem)];
+                _this._matrix[y][x] = [Math.round(_this._color[0] * elem), Math.round(_this._color[1] * elem), Math.round(_this._color[2] * elem)];
             }
         };
         this.getOutput = function () {
@@ -33,6 +32,8 @@ var FileOutput = /** @class */ (function () {
         this._height = height;
         this._width = width;
         this._filename = filename;
+        this._color = color;
+        this._bg_color = bg_color;
         this._matrix = [];
         for (var i = 0; i < height; i++) {
             this._matrix.push([]);

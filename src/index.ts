@@ -13,7 +13,17 @@ import ObjectReader from './utils/ObjectReader';
 import IOutput from "./utils/IOutput";
 import Matrix4x4 from "./components/Matrix4x4";
 import FilesService from "./utils/FilesService";
-import {DEFAULT_BG_COLOR, COLOR, DEFAULT_FILES_PATH, WIDTH, HEIGHT, CAMERA_POS} from './utils/constants';
+
+const DEFAULT_BG_COLOR: number[] = [128,0,255]; // magenta
+const COLOR: number[] = [126, 69, 52]; // brown
+
+const DEFAULT_FILES_PATH: string = 'C:\\Users\\bodya\\Desktop\\Graphics\\CompGraph\\assets\\';
+
+const WIDTH: number = 680;
+const HEIGHT: number = 480;
+
+const SCREEN_OFFSET: number = 700;
+const CAMERA_POS: number = WIDTH + SCREEN_OFFSET;
 
 /* get files paths */
 const filesService = new FilesService(DEFAULT_FILES_PATH);
@@ -41,8 +51,7 @@ const matrix: Matrix4x4 = new Matrix4x4();
 /* operations in order of transition, rotation and scale */
 //matrix.move(-80, -80, 0);
 matrix.rotate(270, 0, 310);
-//matrix.rotate(5, 5, 0);
-matrix.scale(200);
+matrix.scale(800);
 
 /* create poligons from transformed matrix and object data */
 const poligons: Triangle[] = matrix.transformObject(lists[0], lists[1], lists[2]);
